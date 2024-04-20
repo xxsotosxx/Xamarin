@@ -18,21 +18,28 @@ namespace Xamarin
         public PrimaryPage()
         {
             InitializeComponent();
-            gameField.Touch += this.OnTouch;
+
+            gameField.Touch += Scene.OnTouch;
+            gameField.EnableTouchEvents = true;
         }
 
     }
     public class GameField : SKCanvasView {
-        protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
+
+        public GameField()
         {
-            var canvas = e.Surface.Canvas;
+            Scene.mainCanvas = this;
+        }
+
+        protected override void OnPaintSurface(SKPaintSurfaceEventArgs args)
+        {
+            var canvas = args.Surface.Canvas;
             
             // Масштабирование канвы под разрешение экрана
-            var scale = e.Info.Width / (float)Width;
+            var scale = args.Info.Width / (float)Width;
             canvas.Scale(scale);
 
-            Scene.Paint(canvas);
-
+            Scene.Paint(canvas, args);
         }
     }
 }

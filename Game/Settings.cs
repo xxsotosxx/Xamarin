@@ -9,7 +9,7 @@ namespace Game
         {
             IsAntialias = true,
             Style = SKPaintStyle.Fill,
-            TextSize = 32,
+            TextSize = 22,
             TextAlign = SKTextAlign.Center,
             Typeface = SKTypeface.FromFamilyName( "Arial", 50, 10, SKFontStyleSlant.Upright)
         };

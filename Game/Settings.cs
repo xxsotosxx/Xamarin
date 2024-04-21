@@ -7,6 +7,12 @@ namespace Game
     {
         public const int КоличествоСпрайтовНаГлавнойОси = 50;
         private static SKSize _spriteSize = SKSize.Empty;
+
+        public static int ОсновнойОттенокФона = 120;
+        public static int ОсновнойОттенокСвета = 60;
+        public static SKColor backroundColour = SKColor.FromHsl(ОсновнойОттенокФона, 50, 30, 255);
+        public static SKColor lightColour = SKColor.FromHsl(ОсновнойОттенокСвета, 100, 90, 255);
+
         /// <summary>
         /// Функция/свойство, которая расчитывает средний размер спрайта (единичного объекта игрового мира) в зависимости от размера канвы/окна программы
         /// </summary>
@@ -31,9 +37,9 @@ namespace Game
         {
             IsAntialias = true,
             Style = SKPaintStyle.Fill,
-            TextSize = 22,
+            TextSize = 24,
             TextAlign = SKTextAlign.Center,
-            Typeface = SKTypeface.FromFamilyName( "Arial", 50, 10, SKFontStyleSlant.Upright)
+            Typeface = SKTypeface.FromFamilyName( "Arial", 100, 50, SKFontStyleSlant.Upright)
         };
     }
 }

@@ -10,6 +10,7 @@ namespace Xamarin.UWP
             this.InitializeComponent();
             var win = ApplicationView.GetForCurrentView();
             win.Title = "Главное окно программы";
+            //Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
             LoadApplication(new Xamarin.App());
         }
     }

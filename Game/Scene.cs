@@ -1,11 +1,12 @@
-﻿using Game.Logic;
-using SkiaSharp;
+﻿using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.IO;
 using System.Threading;
 
+using Game.Logic;
 
 namespace Game
 {
@@ -16,10 +17,17 @@ namespace Game
         /// </summary>
         internal static readonly ConcurrentBag<Something> objects = new ConcurrentBag<Something>();
         internal static SKCanvasView mainCanvasView;
+        internal static SKBitmap bitmap = null;
         /// <summary>
         /// Создание "живых" существ при старте программы. В дальнейшем будем загружать из файла сохраненных объектов
         /// </summary>
         public static void Init(SKCanvasView canvasView) {
+
+            if (Properties.Resources.ResourceManager.GetObject("moon") is byte[] bytes)
+            {
+                using (Stream stream = new MemoryStream(bytes)) { bitmap = SKBitmap.Decode(stream); }
+            } 
+
             mainCanvasView = canvasView;
             for (int i = 0; i < 10; i++)
             {
@@ -48,7 +56,7 @@ namespace Game
             {
                 case SKTouchAction.Pressed:
                     var obj = new Something();
-                    obj.SetXY(new SKPoint(e.Location.X,e.Location.Y));
+                    obj.SetXY(new SKPoint(e.Location.X - Settings.SpriteSize.Width / 2,e.Location.Y - Settings.SpriteSize.Height / 2));
                     objects.Add(obj);
                     break;
                 case SKTouchAction.Moved:
@@ -68,11 +76,17 @@ namespace Game
         public static void Paint(SKCanvas canvas, SKPaintSurfaceEventArgs args)
         {
             // Заливаем весь фон канвы заданным цветом (иначе говоря - очищаем фон)
-            canvas.Clear(SKColors.Goldenrod);
+            canvas.Clear(Settings.backroundColour);
 
             //Отрисовываем фон игрового мира (карту)
-            //Scene.DrawSkyBox()
-
+            if (bitmap != null)
+            {
+                using (SKPaint paint = new SKPaint())
+                {
+                    paint.BlendMode = SKBlendMode.Multiply;
+                    canvas.DrawBitmap(bitmap, (float)mainCanvasView.Width / 2 - bitmap.Width / 2, (float)mainCanvasView.Height / 2 - bitmap.Height / 2, paint);
+                }
+            }
             //Отрисовываем все объекты игрового мира
             foreach (var item in objects) item.Draw(canvas, args);
 

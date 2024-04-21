@@ -1,7 +1,4 @@
 ﻿using SkiaSharp.Views.Forms;
-using SkiaSharp;
-using System;
-using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,9 +9,6 @@ namespace Xamarin
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PrimaryPage : ContentPage
     {
-        private readonly List<Tuple<SKPoint, SKColor>> points = new List<Tuple<SKPoint, SKColor>>();
-        private readonly Random random = new Random();
-
         public PrimaryPage()
         {
             InitializeComponent();
@@ -26,9 +20,8 @@ namespace Xamarin
     }
     public class GameField : SKCanvasView {
 
-        public GameField()
-        {
-            Scene.mainCanvas = this;
+        public GameField() { 
+//            Scene.Init(this); 
         }
 
         protected override void OnPaintSurface(SKPaintSurfaceEventArgs args)
@@ -40,6 +33,17 @@ namespace Xamarin
             canvas.Scale(scale);
 
             Scene.Paint(canvas, args);
+        }
+
+        protected override void OnParentSet()
+        {
+            base.OnParentSet();
+        }
+
+        protected override void OnSizeAllocated(double width, double height)
+        {
+            base.OnSizeAllocated(width, height);
+            Scene.Rearange(this);
         }
     }
 }

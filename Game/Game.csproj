@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Configurations>Debug;Release;Debug_Graphics</Configurations>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'" />
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Graphics|AnyCPU'">
+    <DefineConstants>$(DefineConstants);DEBUG_SPRITES</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

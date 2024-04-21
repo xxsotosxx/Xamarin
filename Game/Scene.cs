@@ -15,11 +15,12 @@ namespace Game
         /// В этой коллекции (потокобезопасном списке) хранятся все "живые" объекты игрового мира
         /// </summary>
         internal static readonly ConcurrentBag<Something> objects = new ConcurrentBag<Something>();
-        public static SKCanvasView mainCanvas;
+        internal static SKCanvasView mainCanvasView;
         /// <summary>
         /// Создание "живых" существ при старте программы. В дальнейшем будем загружать из файла сохраненных объектов
         /// </summary>
-        static Scene() {
+        public static void Init(SKCanvasView canvasView) {
+            mainCanvasView = canvasView;
             for (int i = 0; i < 10; i++)
             {
                 Something obj = new Something();
@@ -29,9 +30,14 @@ namespace Game
 
             var renderThread = new Thread(new ThreadStart(AnimatiomLoop));
             renderThread.Start();
-
-            //var anim = new Animation(_ => onValueCallback(_currStrokeDash));
         }
+
+        public static void Rearange(SKCanvasView canvasView)
+        {
+            if (objects.Count == 0) Init(canvasView);
+            //TODO: Если размер канвы изменился - нужно пересчитать размеры спрайтов
+        }
+
 
         /// <summary>
         /// Процедура - обработчик на нажатие кнопки мыши или прикосновение к экрану на смартфоне/планшете
@@ -57,7 +63,7 @@ namespace Game
         }
 
         /// <summary>
-        /// Главная сцена отрисовки игрового мира
+        /// Главная процедура отрисовки сцены игрового мира
         /// </summary>
         public static void Paint(SKCanvas canvas, SKPaintSurfaceEventArgs args)
         {
@@ -91,7 +97,7 @@ namespace Game
                 if (msToWait > 0) Thread.Sleep(1); //Thread.Sleep((int)msToWait);
                 else
                 {
-                    mainCanvas.InvalidateSurface();
+                    mainCanvasView.InvalidateSurface();
                     stopwatch.Restart();
                 }
             }

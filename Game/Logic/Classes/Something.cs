@@ -1,9 +1,9 @@
-﻿using SkiaSharp;
+﻿using System;
+using SkiaSharp;
 using SkiaSharp.Views.Forms;
 
 
 using Game.Graphics;
-using System;
 
 namespace Game.Logic
 {
@@ -12,32 +12,47 @@ namespace Game.Logic
     /// </summary>
     internal class Something : I2DGraphicMember
     {
-        protected SKPoint xy;
+        //protected SKPoint xy;
+        //protected SKSize size;
+        protected SKRect rect;
         protected MoveDirection moveDirection;
         protected float speed;
         public Something() {
             moveDirection = (MoveDirection)new Random().Next(0, 4);
             speed = (float)new Random().Next(1, 10)/5;
+            rect.Size = Settings.SpriteSize;
         }
-        public virtual void Draw(SKCanvas canvas, SKPaintSurfaceEventArgs args) => Figures.GradientSphere(canvas, args, xy, SKColors.Bisque);
-        public void SetXY(SKPoint point) => xy = point;
-        private void MoveTo(MoveDirection direction)
+        public virtual void Draw(SKCanvas canvas, SKPaintSurfaceEventArgs args)
         {
-            var predXY = xy;
-            switch (direction)
+            Figures.GradientSphere(canvas, rect, SKColors.Bisque);
+#if DEBUG_SPRITES
+            using (SKPaint paint = new SKPaint())
             {
-                case MoveDirection.Вправо: xy.X+=speed;break;
-                case MoveDirection.Влево:  xy.X-=speed;break;
-                case MoveDirection.Вверх:  xy.Y-=speed;break;
-                case MoveDirection.Вниз:   xy.Y+=speed;break;
+                paint.Color = SKColors.Black;
+                paint.IsStroke = true;
+                canvas.DrawRect(rect, paint);
             }
-            if (xy.X < 0 || xy.Y < 0 || xy.X > Scene.mainCanvas.Width || xy.Y > Scene.mainCanvas.Height)
-            {
-                xy = predXY;
-                moveDirection = (MoveDirection)new Random().Next(0, 4);
-            }
+#endif
         }
 
         public void Animate() => MoveTo(moveDirection);
+        public void SetXY(SKPoint point) => rect.Offset(point);
+        private void MoveTo(MoveDirection direction)
+        {
+            float X = 0; //rect.Left;
+            float Y = 0;// rect.Top;
+            switch (direction)
+            {
+                case MoveDirection.Вправо: X=speed;break;
+                case MoveDirection.Влево:  X=-speed;break;
+                case MoveDirection.Вверх:  Y=-speed;break;
+                case MoveDirection.Вниз:   Y=speed;break;
+            }
+            var nr = rect;
+            nr.Offset(X, Y);
+            if (nr.Left >= 0 && nr.Top >= 0 && nr.Right < Scene.mainCanvasView.Width && nr.Bottom < Scene.mainCanvasView.Height) rect = nr;
+            else moveDirection = (MoveDirection)new Random().Next(0, 4);
+
+        }
     }
 }

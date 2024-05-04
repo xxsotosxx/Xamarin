@@ -36,6 +36,7 @@ namespace Game
                 Something obj = new Cat();//Something();
                 obj.SetXY(new SKPoint(new Random().Next(0, 400), new Random().Next(0, 200)));
                 objects.Add(obj);
+                break;
             }
 
             var renderThread = new Thread(new ThreadStart(AnimatiomLoop));

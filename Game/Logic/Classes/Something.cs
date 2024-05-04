@@ -29,7 +29,7 @@ namespace Game.Logic
         }
     }
 
-    public class Something : I2DGraphicMember
+    public class Something : I2DGraphicMember, IMapAction
     {
         public Position Pos;
         internal int _x;
@@ -46,13 +46,13 @@ namespace Game.Logic
         protected SKRect rect;
         protected MoveDirection moveDirection;
         protected float speed;
-        protected float distance;
+        //protected float distance;
         protected static readonly Random random = new Random();
         private static readonly SKColor color = SKColor.FromHsl(Settings.ОсновнойОттенокФона, 100, 20, 150);
         public Something() {
             moveDirection = (MoveDirection) random.Next(0, 4);
             speed = (float) random.Next(1, 10)/5;
-            distance = random.Next(100, 1000);
+//            distance = random.Next(100, 1000);
             rect.Size = Settings.SpriteSize;
         }
         public virtual void Draw(SKCanvas canvas, SKPaintSurfaceEventArgs args)
@@ -86,13 +86,26 @@ namespace Game.Logic
             if (nr.Left >= 0 && nr.Top >= 0 && nr.Right < Scene.mainCanvasView.Width && nr.Bottom < Scene.mainCanvasView.Height)
             {
                 rect = nr;
-                distance -= speed;
-                if (distance <= 0)
-                {
-                    distance = random.Next(100, 1000);
-                    moveDirection = (MoveDirection) random.Next(0, 4);
-                }
-            } else moveDirection = (MoveDirection) random.Next(0, 4);
+                //distance -= speed;
+                //if (distance <= 0)
+                //{
+                //    distance = random.Next(100, 1000);
+                //    moveDirection = (MoveDirection) random.Next(0, 4);
+                //}
+            } // Столкновение с иобъектами игрового мира 
+            else
+            {
+                this.onCollision(null);
+               // moveDirection = (MoveDirection)random.Next(0, 4);
+            }
+        }
+
+        public virtual void onCollision(Action<Something, Something> param)
+        {
+            if (param == null)
+            {
+                moveDirection = (MoveDirection)random.Next(0, 4);
+            }
         }
     }
 }

@@ -7,6 +7,9 @@ namespace Game.Logic.Classes
 {
     internal class Cat : Animated, IAnimated
     {
+        internal Cat() {
+            moveDirection = MoveDirection.Вправо;
+        }
         public override void MoveTo(MoveDirection direction)
         {
             var Enemyes = Engine.SearchEnamy(this);
@@ -15,7 +18,7 @@ namespace Game.Logic.Classes
             {
                 var deltaX = enemy.PosX;
             }
-            base.MoveTo(MoveDirection.Вправо);
+            base.MoveTo(moveDirection);
         }
 
         public override void Draw(SKCanvas canvas, SKPaintSurfaceEventArgs args)
@@ -34,8 +37,24 @@ namespace Game.Logic.Classes
         public override void doAnimate(SKCanvas canvas, SKPaintSurfaceEventArgs args)
         {
             base.doAnimate(canvas, args);
+
             string frameName = $"CatRightStep{Math.Floor(this.FrameNumber)+1}";
             canvas.DrawBitmap(Engine.AllImages[frameName], rect);
+        }
+
+        public override void onCollision(Action<Something, Something> param)
+        {
+            moveDirection = moveDirection == MoveDirection.Вправо 
+                ? MoveDirection.Влево
+                : moveDirection == MoveDirection.Влево 
+                    ? moveDirection = MoveDirection.Вправо
+                    : moveDirection;
+
+
+            //if (moveDirection == MoveDirection.Вправо)
+            //    moveDirection = MoveDirection.Влево;
+            //else if (moveDirection == MoveDirection.Влево)
+            //    moveDirection = MoveDirection.Вправо;
         }
     }
 }

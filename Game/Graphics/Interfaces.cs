@@ -1,5 +1,7 @@
-﻿using SkiaSharp;
+﻿using Game.Logic;
+using SkiaSharp;
 using SkiaSharp.Views.Forms;
+using System;
 
 namespace Game.Graphics
 {
@@ -17,5 +19,9 @@ namespace Game.Graphics
     internal interface IAnimated
     {
         void doAnimate(SKCanvas canvas, SKPaintSurfaceEventArgs args);
+    }
+    internal interface IMapAction
+    {
+        void onCollision(Action<Something,Something> param);
     }
 }

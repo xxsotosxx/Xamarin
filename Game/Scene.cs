@@ -7,6 +7,8 @@ using System.IO;
 using System.Threading;
 
 using Game.Logic;
+using Game.Logic.Classes;
+using Game.Graphics;
 
 namespace Game
 {
@@ -31,7 +33,7 @@ namespace Game
             mainCanvasView = canvasView;
             for (int i = 0; i < 10; i++)
             {
-                Something obj = new Something();
+                Something obj = new Cat();//Something();
                 obj.SetXY(new SKPoint(new Random().Next(0, 400), new Random().Next(0, 200)));
                 objects.Add(obj);
             }
@@ -88,8 +90,11 @@ namespace Game
                 }
             }
             //Отрисовываем все объекты игрового мира
-            foreach (var item in objects) item.Draw(canvas, args);
-
+            foreach (var item in objects)
+            {
+                if (item is IAnimated animatedItem) animatedItem.doAnimate(canvas, args);
+                else item.Draw(canvas, args);
+            }
             // Выводим статистику по игре
             canvas.TextStrokeHead($"Популяция существ: {objects.Count}") ;
         }

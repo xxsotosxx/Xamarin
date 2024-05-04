@@ -17,12 +17,31 @@ namespace Game.Logic
         public int col;
         public int row;
     }
+
+    public class Animated : Something
+    {
+        public const int FramesCount = 3;
+        public double FrameNumber;
+        public virtual void doAnimate(SKCanvas canvas, SKPaintSurfaceEventArgs args) {
+            Draw(canvas, args);
+            FrameNumber+=0.1;
+            if (FrameNumber>=FramesCount) FrameNumber = 0;
+        }
+    }
+
     public class Something : I2DGraphicMember
     {
         public Position Pos;
+        internal int _x;
+        internal int _y;
         public int PosX {
             get => Pos.col * Engine.SpriteWidth;
-            set { }
+            set { _x = value; }
+        }
+        public int PosY
+        {
+            get => Pos.row * Engine.SpriteHeight;
+            set { _y = value; }
         }
         protected SKRect rect;
         protected MoveDirection moveDirection;

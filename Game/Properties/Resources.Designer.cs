@@ -63,6 +63,66 @@ namespace Game.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Byte[].
         /// </summary>
+        internal static byte[] CatLeftStep1 {
+            get {
+                object obj = ResourceManager.GetObject("CatLeftStep1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] CatLeftStep2 {
+            get {
+                object obj = ResourceManager.GetObject("CatLeftStep2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] CatLeftStep3 {
+            get {
+                object obj = ResourceManager.GetObject("CatLeftStep3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] CatRightStep1 {
+            get {
+                object obj = ResourceManager.GetObject("CatRightStep1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] CatRightStep2 {
+            get {
+                object obj = ResourceManager.GetObject("CatRightStep2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] CatRightStep3 {
+            get {
+                object obj = ResourceManager.GetObject("CatRightStep3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
         internal static byte[] moon {
             get {
                 object obj = ResourceManager.GetObject("moon", resourceCulture);

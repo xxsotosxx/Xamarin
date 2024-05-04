@@ -10,7 +10,12 @@ namespace Game.Graphics
     internal interface I2DGraphicMember
     {
         void Draw(SKCanvas canvas, SKPaintSurfaceEventArgs args);
-        void Animate();
+        //void Animate();
         void SetXY(SKPoint point);
+    }
+
+    internal interface IAnimated
+    {
+        void doAnimate(SKCanvas canvas, SKPaintSurfaceEventArgs args);
     }
 }

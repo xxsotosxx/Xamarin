@@ -4,14 +4,26 @@ using SkiaSharp.Views.Forms;
 
 
 using Game.Graphics;
+using Game.Logic.Classes;
 
 namespace Game.Logic
 {
     /// <summary>
     /// Класс - существо, от которого будут унаследованы все другие.
     /// </summary>
-    internal class Something : I2DGraphicMember
+    /// 
+    public class Position
     {
+        public int col;
+        public int row;
+    }
+    public class Something : I2DGraphicMember
+    {
+        public Position Pos;
+        public int PosX {
+            get => Pos.col * Engine.SpriteWidth;
+            set { }
+        }
         protected SKRect rect;
         protected MoveDirection moveDirection;
         protected float speed;
@@ -39,7 +51,7 @@ namespace Game.Logic
 
         public void Animate() => MoveTo(moveDirection);
         public void SetXY(SKPoint point) => rect.Offset(point);
-        private void MoveTo(MoveDirection direction)
+        public virtual void MoveTo(MoveDirection direction)
         {
             float X = 0; 
             float Y = 0;

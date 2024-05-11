@@ -10,7 +10,7 @@ namespace Game.Logic.Classes
             //TODO: Найти ближайшего врага 
             foreach (var enemy in Enemyes)
             {
-                deltaX = enemy.
+                //deltaX = enemy.
             }
             //base.MoveTo(direction);
         }

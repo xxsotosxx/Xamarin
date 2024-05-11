@@ -1,12 +1,14 @@
 ﻿using SkiaSharp;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
+
+
+using Engine;
+
 
 namespace Game.Logic.Classes
 {
-    public static class Engine
+    public static class GamePrepare
     {
         //public static Engine eng;
         public const int SpriteWidth = 64;
@@ -15,13 +17,13 @@ namespace Game.Logic.Classes
         public static object[,] GameField = new object[100,100];  
 
         public static Dictionary<string, SKBitmap> AllImages = new Dictionary<string, SKBitmap>();
-        public static List<Something> SearchEnamy(Something seeker)
+        public static List<Something> SearchEnemy(Something seeker)
         {
             List<Something> result = new List<Something>();
 
             return result;
         } 
-        static Engine()
+        static GamePrepare()
         {
             SKBitmap bitmap;
 

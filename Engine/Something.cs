@@ -1,12 +1,11 @@
 ﻿using System;
 using SkiaSharp;
-using SkiaSharp.Views.Forms;
 
 
-using Game.Graphics;
-using Game.Logic.Classes;
+using Engine.Graphics;
 
-namespace Game.Logic
+
+namespace Engine
 {
     /// <summary>
     /// Класс - существо, от которого будут унаследованы все другие.
@@ -18,11 +17,14 @@ namespace Game.Logic
         public int row;
     }
 
-    public class Animated : Something
+    public class Animated : Something 
     {
         public const int FramesCount = 3;
         public double FrameNumber;
-        public virtual void doAnimate(SKCanvas canvas, SKPaintSurfaceEventArgs args) {
+
+        public Animated(Settings settingsHost) : base(settingsHost) { }
+
+        public virtual void doAnimate(SKCanvas canvas, /*SKPaintSurfaceEventArgs*/ object args) {
             Draw(canvas, args);
             FrameNumber+=0.1;
             if (FrameNumber>=FramesCount) FrameNumber = 0;
@@ -31,31 +33,32 @@ namespace Game.Logic
 
     public class Something : I2DGraphicMember, IMapAction
     {
+        protected Settings sHost; 
         public Position Pos;
-        internal int _x;
-        internal int _y;
-        public int PosX {
-            get => Pos.col * Engine.SpriteWidth;
-            set { _x = value; }
+        public SKPoint PosXY;
+        //internal float _x;
+        //internal int _y;
+        public float PosX {
+            get => Pos.col * sHost.SpriteSize.Width;
+            set { PosXY.X = value; }
         }
-        public int PosY
+        public float PosY
         {
-            get => Pos.row * Engine.SpriteHeight;
-            set { _y = value; }
+            get => Pos.row * sHost.SpriteSize.Height;
+            set { PosXY.X = value; }
         }
         protected SKRect rect;
         protected MoveDirection moveDirection;
         protected float speed;
-        //protected float distance;
         protected static readonly Random random = new Random();
-        private static readonly SKColor color = SKColor.FromHsl(Settings.ОсновнойОттенокФона, 100, 20, 150);
-        public Something() {
+        private SKColor color => SKColor.FromHsl(sHost.ОсновнойОттенокФона, 100, 20, 150);
+        public Something(Settings settingsHost) {
+            sHost = settingsHost;
             moveDirection = (MoveDirection) random.Next(0, 4);
             speed = (float) random.Next(1, 10)/5;
-//            distance = random.Next(100, 1000);
-            rect.Size = Settings.SpriteSize;
+            rect.Size = sHost.SpriteSize;
         }
-        public virtual void Draw(SKCanvas canvas, SKPaintSurfaceEventArgs args)
+        public virtual void Draw(SKCanvas canvas, /*SKPaintSurfaceEventArgs*/ object args)
         {
             Figures.GradientSphere(canvas, rect, color, 80);
 #if DEBUG_SPRITES
@@ -83,7 +86,7 @@ namespace Game.Logic
             }
             var nr = rect;
             nr.Offset(X, Y);
-            if (nr.Left >= 0 && nr.Top >= 0 && nr.Right < Scene.mainCanvasView.Width && nr.Bottom < Scene.mainCanvasView.Height)
+            if (nr.Left >= 0 && nr.Top >= 0 && nr.Right < sHost.Width && nr.Bottom < sHost.Height /*Scene.mainCanvasView.Width && nr.Bottom < Scene.mainCanvasView.Height*/)
             {
                 rect = nr;
                 //distance -= speed;

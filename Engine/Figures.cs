@@ -1,15 +1,14 @@
 ﻿using SkiaSharp;
-using SkiaSharp.Views.Forms;
 
 
-namespace Game.Graphics
+namespace Engine.Graphics
 {
-    internal static class Figures
+    public static class Figures
     {
         /// <summary>
         /// Рисует градиентную сферу в координатах xy цветом color
         /// </summary>
-        internal static void GradientSphere(SKCanvas canvas, in SKRect rect, in SKColor color, int light)
+        public static void GradientSphere(SKCanvas canvas, in SKRect rect, in SKColor color, int light)
         {
 
             SKShaderTileMode tileMode = SKShaderTileMode.Decal;

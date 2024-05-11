@@ -1,27 +1,29 @@
-﻿using Game.Graphics;
-using SkiaSharp;
-using SkiaSharp.Views.Forms;
+﻿using SkiaSharp;
 using System;
+
+
+using Engine;
+
 
 namespace Game.Logic.Classes
 {
     internal class Cat : Animated, IAnimated
     {
-        internal Cat() {
+        internal Cat(Settings settings): base(settings) {
             moveDirection = MoveDirection.Вправо;
         }
         public override void MoveTo(MoveDirection direction)
         {
-            var Enemyes = Engine.SearchEnamy(this);
-            //TODO: Найти ближайшего врага 
-            foreach (var enemy in Enemyes)
-            {
-                var deltaX = enemy.PosX;
-            }
+            //var Enemyes = Engine.SearchEnemy(this);
+            ////TODO: Найти ближайшего врага 
+            //foreach (var enemy in Enemyes)
+            //{
+            //    var deltaX = enemy.PosX;
+            //}
             base.MoveTo(moveDirection);
         }
 
-        public override void Draw(SKCanvas canvas, SKPaintSurfaceEventArgs args)
+        public override void Draw(SKCanvas canvas, /*SKPaintSurfaceEventArgs*/ object args)
         {
             base.Draw(canvas, args);
             //canvas.DrawBitmap(Engine.AllImages["CatRightStep1"], rect);
@@ -34,12 +36,12 @@ namespace Game.Logic.Classes
             //}
         }
 
-        public override void doAnimate(SKCanvas canvas, SKPaintSurfaceEventArgs args)
+        public override void doAnimate(SKCanvas canvas, /*SKPaintSurfaceEventArgs */ object args)
         {
             base.doAnimate(canvas, args);
 
             string frameName = $"CatRightStep{Math.Floor(this.FrameNumber)+1}";
-            canvas.DrawBitmap(Engine.AllImages[frameName], rect);
+            canvas.DrawBitmap(GamePrepare.AllImages[frameName], rect);
         }
 
         public override void onCollision(Action<Something, Something> param)

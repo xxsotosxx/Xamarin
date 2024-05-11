@@ -6,9 +6,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 
-using Game.Logic;
+
+
 using Game.Logic.Classes;
-using Game.Graphics;
+using Engine;
+
+
 
 namespace Game
 {
@@ -20,6 +23,9 @@ namespace Game
         internal static readonly ConcurrentBag<Something> objects = new ConcurrentBag<Something>();
         internal static SKCanvasView mainCanvasView;
         internal static SKBitmap bitmap = null;
+        internal static Settings globalSettings = null;
+
+
         /// <summary>
         /// Создание "живых" существ при старте программы. В дальнейшем будем загружать из файла сохраненных объектов
         /// </summary>
@@ -31,9 +37,11 @@ namespace Game
             } 
 
             mainCanvasView = canvasView;
+            globalSettings = new Settings(canvasView.Width, canvasView.Height);
+
             for (int i = 0; i < 10; i++)
             {
-                Something obj = new Cat();//Something();
+                Something obj = new Cat(globalSettings);//Something();
                 obj.SetXY(new SKPoint(new Random().Next(0, 400), new Random().Next(0, 200)));
                 objects.Add(obj);
                 break;
@@ -58,8 +66,8 @@ namespace Game
             switch (e.ActionType)
             {
                 case SKTouchAction.Pressed:
-                    var obj = new Something();
-                    obj.SetXY(new SKPoint(e.Location.X - Settings.SpriteSize.Width / 2,e.Location.Y - Settings.SpriteSize.Height / 2));
+                    var obj = new Something(globalSettings);
+                    obj.SetXY(new SKPoint(e.Location.X - globalSettings.SpriteSize.Width / 2,e.Location.Y - globalSettings.SpriteSize.Height / 2));
                     objects.Add(obj);
                     break;
                 case SKTouchAction.Moved:
@@ -79,7 +87,7 @@ namespace Game
         public static void Paint(SKCanvas canvas, SKPaintSurfaceEventArgs args)
         {
             // Заливаем весь фон канвы заданным цветом (иначе говоря - очищаем фон)
-            canvas.Clear(Settings.backroundColour);
+            canvas.Clear(globalSettings.backgroundColour);
 
             //Отрисовываем фон игрового мира (карту)
             if (bitmap != null)
@@ -97,7 +105,7 @@ namespace Game
                 else item.Draw(canvas, args);
             }
             // Выводим статистику по игре
-            canvas.TextStrokeHead($"Популяция существ: {objects.Count}") ;
+            canvas.TextStrokeHead(globalSettings, $"Популяция существ: {objects.Count}") ;
         }
 
         /// <summary>

@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xamarin", "Xamarin\Xamarin.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Game", "Game\Game.csproj", "{88E9E78B-3AFF-4A9C-A38F-26520E9372E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csproj", "{688330BE-E4D0-4449-8025-54CE4FA772E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Engine", "Engine\Engine.csproj", "{688330BE-E4D0-4449-8025-54CE4FA772E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -190,8 +190,8 @@ Global
 		{88E9E78B-3AFF-4A9C-A38F-26520E9372E3}.Release|x64.Build.0 = Release|Any CPU
 		{88E9E78B-3AFF-4A9C-A38F-26520E9372E3}.Release|x86.ActiveCfg = Release|Any CPU
 		{88E9E78B-3AFF-4A9C-A38F-26520E9372E3}.Release|x86.Build.0 = Release|Any CPU
-		{688330BE-E4D0-4449-8025-54CE4FA772E9}.Debug_Graphics|Any CPU.ActiveCfg = Debug|Any CPU
-		{688330BE-E4D0-4449-8025-54CE4FA772E9}.Debug_Graphics|Any CPU.Build.0 = Debug|Any CPU
+		{688330BE-E4D0-4449-8025-54CE4FA772E9}.Debug_Graphics|Any CPU.ActiveCfg = Debug_Graphics|Any CPU
+		{688330BE-E4D0-4449-8025-54CE4FA772E9}.Debug_Graphics|Any CPU.Build.0 = Debug_Graphics|Any CPU
 		{688330BE-E4D0-4449-8025-54CE4FA772E9}.Debug_Graphics|ARM.ActiveCfg = Debug|Any CPU
 		{688330BE-E4D0-4449-8025-54CE4FA772E9}.Debug_Graphics|ARM.Build.0 = Debug|Any CPU
 		{688330BE-E4D0-4449-8025-54CE4FA772E9}.Debug_Graphics|ARM64.ActiveCfg = Debug|Any CPU

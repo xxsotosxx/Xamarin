@@ -34,7 +34,7 @@ namespace Engine
     public class Something : I2DGraphicMember, IMapAction
     {
         protected Settings sHost; 
-        public Position Pos;
+        public Position Pos = new Position();
         public SKPoint PosXY;
         //internal float _x;
         //internal int _y;
@@ -47,7 +47,7 @@ namespace Engine
             get => Pos.row * sHost.SpriteSize.Height;
             set { PosXY.X = value; }
         }
-        protected SKRect rect;
+        public SKRect rect;
         protected MoveDirection moveDirection;
         protected float speed;
         protected static readonly Random random = new Random();

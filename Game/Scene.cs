@@ -103,6 +103,15 @@ namespace Game
             {
                 if (item is IAnimated animatedItem) animatedItem.doAnimate(canvas, args);
                 else item.Draw(canvas, args);
+
+#if DEBUG_GRAPHICS
+                SKPaint p = new SKPaint()
+                {
+                    Color = SKColors.Black,
+                    Style = SKPaintStyle.Stroke,
+                };
+                canvas.DrawRect(item.rect,p);
+#endif
             }
             // Выводим статистику по игре
             canvas.TextStrokeHead(globalSettings, $"Популяция существ: {objects.Count}") ;

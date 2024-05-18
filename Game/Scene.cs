@@ -66,9 +66,9 @@ namespace Game
             switch (e.ActionType)
             {
                 case SKTouchAction.Pressed:
-                    var obj = new Something(globalSettings);
-                    obj.SetXY(new SKPoint(e.Location.X - globalSettings.SpriteSize.Width / 2,e.Location.Y - globalSettings.SpriteSize.Height / 2));
-                    objects.Add(obj);
+                    var obj = new Cat(globalSettings);
+                    if (obj.SetXY(new SKPoint(e.Location.X - globalSettings.SpriteSize.Width / 2,e.Location.Y - globalSettings.SpriteSize.Height / 2)))
+                        objects.Add(obj);
                     break;
                 case SKTouchAction.Moved:
                     break;
@@ -90,14 +90,14 @@ namespace Game
             canvas.Clear(globalSettings.backgroundColour);
 
             //Отрисовываем фон игрового мира (карту)
-            if (bitmap != null)
-            {
-                using (SKPaint paint = new SKPaint())
-                {
-                    paint.BlendMode = SKBlendMode.Multiply;
-                    canvas.DrawBitmap(bitmap, (float)mainCanvasView.Width / 2 - bitmap.Width / 2, (float)mainCanvasView.Height / 2 - bitmap.Height / 2, paint);
-                }
-            }
+            //if (bitmap != null)
+            //{
+            //    using (SKPaint paint = new SKPaint())
+            //    {
+            //        paint.BlendMode = SKBlendMode.Multiply;
+            //        canvas.DrawBitmap(bitmap, (float)mainCanvasView.Width / 2 - bitmap.Width / 2, (float)mainCanvasView.Height / 2 - bitmap.Height / 2, paint);
+            //    }
+            //}
             //Отрисовываем все объекты игрового мира
             foreach (var item in objects)
             {
@@ -111,10 +111,10 @@ namespace Game
                     Style = SKPaintStyle.Stroke,
                 };
                 canvas.DrawRect(item.rect,p);
+            canvas.TextStrokeHead(globalSettings, $"Популяция существ: {objects.Count}") ;
 #endif
             }
             // Выводим статистику по игре
-            canvas.TextStrokeHead(globalSettings, $"Популяция существ: {objects.Count}") ;
         }
 
         /// <summary>

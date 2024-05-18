@@ -31,6 +31,8 @@ namespace Game.Logic.Classes
             foreach (var item in new List<string> 
              { "CatLeftStep1","CatLeftStep2","CatLeftStep3"
               ,"CatRightStep1","CatRightStep2","CatRightStep3"
+              ,"CatUpStep1","CatUpStep2"
+              ,"CatDownStep1","CatDownStep2"
             })
             {
                 if (Properties.Resources.ResourceManager.GetObject(item) is byte[] bytes)

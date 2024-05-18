@@ -12,45 +12,52 @@ namespace Game.Logic.Classes
         internal Cat(Settings settings): base(settings) {
             moveDirection = MoveDirection.Вправо;
         }
+
+        public override void Draw(SKCanvas canvas, object args)
+        {
+
+        }
+
         public override void MoveTo(MoveDirection direction)
         {
-            //var Enemyes = Engine.SearchEnemy(this);
-            ////TODO: Найти ближайшего врага 
-            //foreach (var enemy in Enemyes)
-            //{
-            //    var deltaX = enemy.PosX;
-            //}
             base.MoveTo(moveDirection);
         }
 
-        public override void Draw(SKCanvas canvas, /*SKPaintSurfaceEventArgs*/ object args)
-        {
-            base.Draw(canvas, args);
-            //canvas.DrawBitmap(Engine.AllImages["CatRightStep1"], rect);
-            //switch (moveDirection)
-            //{
-            //    case MoveDirection.Вправо: canvas.DrawBitmap(catBitmap);
-            //    case MoveDirection.Влево: X = -speed; break;
-            //    case MoveDirection.Вверх: Y = -speed; break;
-            //    case MoveDirection.Вниз: Y = speed; break;
-            //}
-        }
-
-        public override void doAnimate(SKCanvas canvas, /*SKPaintSurfaceEventArgs */ object args)
+        public override void doAnimate(SKCanvas canvas, object args)
         {
             base.doAnimate(canvas, args);
+            string frameName = string.Empty;
 
-            string frameName = $"CatRightStep{Math.Floor(this.FrameNumber)+1}";
-            canvas.DrawBitmap(GamePrepare.AllImages[frameName], rect);
+            switch (moveDirection)
+            {
+                case MoveDirection.Вправо:
+                    frameName = $"CatRightStep{Math.Floor(FrameNumber) + 1}";
+                    break;
+                case MoveDirection.Влево:
+                    frameName = $"CatLeftStep{Math.Floor(FrameNumber) + 1}";
+                    break;
+                case MoveDirection.Вверх:
+                    if (FrameNumber >= 2) FrameNumber = 0;
+                    frameName = $"CatUpStep{Math.Floor(FrameNumber) + 1}";
+                    //TODO: Исправить! Архитектурая городулька! Необходимо использовать FramesCount
+                    break;
+                case MoveDirection.Вниз:
+                    if (FrameNumber >= 2) FrameNumber = 0;
+                    frameName = $"CatDownStep{Math.Floor(FrameNumber) + 1}";
+                    break;
+            }
+            if (frameName != string.Empty)
+                canvas.DrawBitmap(GamePrepare.AllImages[frameName], rect);
         }
 
         public override void onCollision(Action<Something, Something> param)
         {
-            moveDirection = moveDirection == MoveDirection.Вправо 
-                ? MoveDirection.Влево
-                : moveDirection == MoveDirection.Влево 
-                    ? moveDirection = MoveDirection.Вправо
-                    : moveDirection;
+            base.onCollision(param);
+            //moveDirection = moveDirection == MoveDirection.Вправо 
+            //    ? MoveDirection.Влево
+            //    : moveDirection == MoveDirection.Влево 
+            //        ? moveDirection = MoveDirection.Вправо
+            //        : moveDirection;
 
 
             //if (moveDirection == MoveDirection.Вправо)

@@ -118,6 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="CatDownStep1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\images\1714799096475.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CatDownStep2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\images\1714799108430.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="CatLeftStep1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Graphics\images\CatLeftStep1.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -135,6 +141,12 @@
   </data>
   <data name="CatRightStep3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Graphics\images\CatRightStep3.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CatUpStep1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\images\1714798912346.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CatUpStep2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\images\1714798922554.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="moon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Graphics\images\moon.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

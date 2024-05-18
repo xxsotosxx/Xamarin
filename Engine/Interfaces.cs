@@ -4,14 +4,14 @@ using System;
 namespace Engine
 {
 
-    public enum MoveDirection { Вверх, Вниз, Вправо, Влево };
+    public enum MoveDirection { Вверх = 1, Вниз = 2, Вправо = 3, Влево = 4 };
 
     //Интерфейс, обязывающий вести объект, который унаследовал этот интерфейс, как графический объект двумерного пространства.
     public interface I2DGraphicMember
     {
         void Draw(SKCanvas canvas, object args/*SKPaintSurfaceEventArgs args*/);
         //void Animate();
-        void SetXY(SKPoint point);
+        bool SetXY(SKPoint point);
     }
 
     public interface IAnimated

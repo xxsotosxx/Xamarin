@@ -7,10 +7,6 @@ using Engine.Graphics;
 
 namespace Engine
 {
-    /// <summary>
-    /// Класс - существо, от которого будут унаследованы все другие.
-    /// </summary>
-    /// 
     public class Position
     {
         public int col;
@@ -31,13 +27,21 @@ namespace Engine
         }
     }
 
+    /// <summary>
+    /// Класс - существо, от которого будут унаследованы все другие.
+    /// </summary>
     public class Something : I2DGraphicMember, IMapAction
     {
-        protected Settings sHost; 
+        protected Settings sHost;
+        protected MoveDirection moveDirection;
+        protected float speed;
+        protected static readonly Random random = new Random();
+
+        private string Name;
+
         public Position Pos = new Position();
         public SKPoint PosXY;
-        //internal float _x;
-        //internal int _y;
+
         public float PosX {
             get => Pos.col * sHost.SpriteSize.Width;
             set { PosXY.X = value; }
@@ -47,18 +51,23 @@ namespace Engine
             get => Pos.row * sHost.SpriteSize.Height;
             set { PosXY.X = value; }
         }
+
         public SKRect rect;
-        protected MoveDirection moveDirection;
-        protected float speed;
-        protected static readonly Random random = new Random();
-        private SKColor color => SKColor.FromHsl(sHost.ОсновнойОттенокФона, 100, 20, 150);
+        private SKColor color => SKColor.FromHsl(sHost.ОсновнойОттенокФона, 100, 20, 150 );
+
+        public bool isCollision(SKRect nr)
+        {
+            //TODO: Требуется оптимизация
+            return !(nr.Left >= 0 && nr.Top >= 0 && nr.Right < sHost.Width && nr.Bottom < sHost.Height);
+        }
+
         public Something(Settings settingsHost) {
             sHost = settingsHost;
             moveDirection = (MoveDirection) random.Next(0, 4);
             speed = (float) random.Next(1, 10)/5;
             rect.Size = sHost.SpriteSize;
         }
-        public virtual void Draw(SKCanvas canvas, /*SKPaintSurfaceEventArgs*/ object args)
+        public virtual void Draw(SKCanvas canvas, object args)
         {
             Figures.GradientSphere(canvas, rect, color, 80);
 #if DEBUG_SPRITES
@@ -72,7 +81,16 @@ namespace Engine
         }
 
         public void Animate() => MoveTo(moveDirection);
-        public void SetXY(SKPoint point) => rect.Offset(point);
+        public bool SetXY(SKPoint point)
+        {
+            SKRect tmpRect = rect;
+            tmpRect.Offset(point);
+            if (!isCollision(tmpRect))
+            {
+                rect.Offset(point);
+                return true;
+            } else return false;
+        }
         public virtual void MoveTo(MoveDirection direction)
         {
             float X = 0; 
@@ -86,7 +104,7 @@ namespace Engine
             }
             var nr = rect;
             nr.Offset(X, Y);
-            if (nr.Left >= 0 && nr.Top >= 0 && nr.Right < sHost.Width && nr.Bottom < sHost.Height /*Scene.mainCanvasView.Width && nr.Bottom < Scene.mainCanvasView.Height*/)
+            if (!isCollision(nr))
             {
                 rect = nr;
                 //distance -= speed;
@@ -107,7 +125,7 @@ namespace Engine
         {
             if (param == null)
             {
-                moveDirection = (MoveDirection)random.Next(0, 4);
+                moveDirection = (MoveDirection)random.Next(1, 5);
             }
         }
     }

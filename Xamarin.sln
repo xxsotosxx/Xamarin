@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Game", "Game\Game.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Engine", "Engine\Engine.csproj", "{688330BE-E4D0-4449-8025-54CE4FA772E9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editor", "Editor\Editor.csproj", "{F11CCC4C-BE99-401A-80F2-E6CD370003DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug_Graphics|Any CPU = Debug_Graphics|Any CPU
@@ -220,6 +222,36 @@ Global
 		{688330BE-E4D0-4449-8025-54CE4FA772E9}.Release|x64.Build.0 = Release|Any CPU
 		{688330BE-E4D0-4449-8025-54CE4FA772E9}.Release|x86.ActiveCfg = Release|Any CPU
 		{688330BE-E4D0-4449-8025-54CE4FA772E9}.Release|x86.Build.0 = Release|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Debug_Graphics|Any CPU.ActiveCfg = Debug|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Debug_Graphics|Any CPU.Build.0 = Debug|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Debug_Graphics|ARM.ActiveCfg = Debug|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Debug_Graphics|ARM.Build.0 = Debug|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Debug_Graphics|ARM64.ActiveCfg = Debug|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Debug_Graphics|ARM64.Build.0 = Debug|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Debug_Graphics|x64.ActiveCfg = Debug|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Debug_Graphics|x64.Build.0 = Debug|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Debug_Graphics|x86.ActiveCfg = Debug|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Debug_Graphics|x86.Build.0 = Debug|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Debug|ARM.Build.0 = Debug|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Debug|x64.Build.0 = Debug|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Debug|x86.Build.0 = Debug|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Release|ARM.ActiveCfg = Release|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Release|ARM.Build.0 = Release|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Release|ARM64.Build.0 = Release|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Release|x64.ActiveCfg = Release|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Release|x64.Build.0 = Release|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Release|x86.ActiveCfg = Release|Any CPU
+		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

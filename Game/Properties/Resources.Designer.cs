@@ -63,6 +63,26 @@ namespace Game.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Byte[].
         /// </summary>
+        internal static byte[] CatDownStep1 {
+            get {
+                object obj = ResourceManager.GetObject("CatDownStep1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] CatDownStep2 {
+            get {
+                object obj = ResourceManager.GetObject("CatDownStep2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
         internal static byte[] CatLeftStep1 {
             get {
                 object obj = ResourceManager.GetObject("CatLeftStep1", resourceCulture);
@@ -116,6 +136,26 @@ namespace Game.Properties {
         internal static byte[] CatRightStep3 {
             get {
                 object obj = ResourceManager.GetObject("CatRightStep3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] CatUpStep1 {
+            get {
+                object obj = ResourceManager.GetObject("CatUpStep1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] CatUpStep2 {
+            get {
+                object obj = ResourceManager.GetObject("CatUpStep2", resourceCulture);
                 return ((byte[])(obj));
             }
         }

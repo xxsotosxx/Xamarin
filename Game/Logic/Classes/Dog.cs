@@ -1,15 +1,15 @@
-﻿using SkiaSharp;
-using System;
-
+﻿
 
 using Engine;
-
+using SkiaSharp;
+using System;
 
 namespace Game.Logic.Classes
 {
-     internal class Cat : Animated, IAnimated
-     {
-        internal Cat(Settings settings) : base(settings) {
+    internal class Dog : Animated, IAnimated
+    {
+        internal Dog(Settings settings) : base(settings)
+        {
             moveDirection = MoveDirection.Вправо;
         }
 
@@ -31,19 +31,21 @@ namespace Game.Logic.Classes
             switch (moveDirection)
             {
                 case MoveDirection.Вправо:
-                    frameName = $"CatRightStep{Math.Floor(FrameNumber) + 1}";
+                    if (FrameNumber >= 2) FrameNumber = 0;
+                    frameName = $"DogRightStep{Math.Floor(FrameNumber) + 1}";
                     break;
                 case MoveDirection.Влево:
-                    frameName = $"CatLeftStep{Math.Floor(FrameNumber) + 1}";
+                    if (FrameNumber >= 2) FrameNumber = 0;
+                    frameName = $"DogLeftStep{Math.Floor(FrameNumber) + 1}";
                     break;
                 case MoveDirection.Вверх:
                     if (FrameNumber >= 2) FrameNumber = 0;
-                    frameName = $"CatUpStep{Math.Floor(FrameNumber) + 1}";
+                    frameName = $"DogUpStep{Math.Floor(FrameNumber) + 1}";
                     //TODO: Исправить! Архитектурая городулька! Необходимо использовать FramesCount
                     break;
                 case MoveDirection.Вниз:
                     if (FrameNumber >= 2) FrameNumber = 0;
-                    frameName = $"CatDownStep{Math.Floor(FrameNumber) + 1}";
+                    frameName = $"DogDownStep{Math.Floor(FrameNumber) + 1}";
                     break;
             }
             if (frameName != string.Empty)

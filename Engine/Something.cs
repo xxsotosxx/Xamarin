@@ -18,7 +18,7 @@ namespace Engine
         public const int FramesCount = 3;
         public double FrameNumber;
 
-        public Animated(Settings settingsHost) : base(settingsHost) { }
+        public Animated(Settings settingsHost) : base(settingsHost, "") { }
 
         public virtual void doAnimate(SKCanvas canvas, /*SKPaintSurfaceEventArgs*/ object args) {
             Draw(canvas, args);
@@ -37,7 +37,7 @@ namespace Engine
         protected float speed;
         protected static readonly Random random = new Random();
 
-        private string Name;
+        public string Name;
 
         public Position Pos = new Position();
         public SKPoint PosXY;
@@ -61,7 +61,9 @@ namespace Engine
             return !(nr.Left >= 0 && nr.Top >= 0 && nr.Right < sHost.Width && nr.Bottom < sHost.Height);
         }
 
-        public Something(Settings settingsHost) {
+        public Something(Settings settingsHost, string Name) {
+            this.Name = Name;
+
             sHost = settingsHost;
             moveDirection = (MoveDirection) random.Next(0, 4);
             speed = (float) random.Next(1, 10)/5;

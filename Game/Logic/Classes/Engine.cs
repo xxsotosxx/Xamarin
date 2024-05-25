@@ -28,11 +28,17 @@ namespace Game.Logic.Classes
             SKBitmap bitmap;
 
             //Загружаем картинки котов
+            //TODO: Переделать! Так делать нельзя!!! 
             foreach (var item in new List<string> 
              { "CatLeftStep1","CatLeftStep2","CatLeftStep3"
               ,"CatRightStep1","CatRightStep2","CatRightStep3"
               ,"CatUpStep1","CatUpStep2"
               ,"CatDownStep1","CatDownStep2"
+
+              ,"DogLeftStep1","DogLeftStep2"
+              ,"DogRightStep1","DogRightStep2"
+              ,"DogUpStep1","DogUpStep2"
+              ,"DogDownStep1","DogDownStep2"
             })
             {
                 if (Properties.Resources.ResourceManager.GetObject(item) is byte[] bytes)

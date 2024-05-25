@@ -9,14 +9,14 @@ namespace Engine
     //Интерфейс, обязывающий вести объект, который унаследовал этот интерфейс, как графический объект двумерного пространства.
     public interface I2DGraphicMember
     {
-        void Draw(SKCanvas canvas, object args/*SKPaintSurfaceEventArgs args*/);
+        void Draw(SKCanvas canvas, object args);
         //void Animate();
         bool SetXY(SKPoint point);
     }
 
     public interface IAnimated
     {
-        void doAnimate(SKCanvas canvas, object args/*SKPaintSurfaceEventArgs args*/);
+        void doAnimate(SKCanvas canvas, object args);
     }
     public interface IMapAction
     {

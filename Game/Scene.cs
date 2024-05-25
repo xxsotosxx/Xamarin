@@ -1,16 +1,18 @@
-﻿using SkiaSharp;
-using SkiaSharp.Views.Forms;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using System.Text.Json;
+using System.Collections.Generic;
 
+
+using SkiaSharp;
+using SkiaSharp.Views.Forms;
 
 
 using Game.Logic.Classes;
 using Engine;
-
 
 
 namespace Game
@@ -20,7 +22,8 @@ namespace Game
         /// <summary>
         /// В этой коллекции (потокобезопасном списке) хранятся все "живые" объекты игрового мира
         /// </summary>
-        internal static readonly ConcurrentBag<Something> objects = new ConcurrentBag<Something>();
+        internal static ConcurrentBag<Something> objects = new ConcurrentBag<Something>();
+        internal static List<Something> worldmap = new List<Something>();
         internal static SKCanvasView mainCanvasView;
         internal static SKBitmap bitmap = null;
         internal static Settings globalSettings = null;
@@ -31,10 +34,17 @@ namespace Game
         /// </summary>
         public static void Init(SKCanvasView canvasView) {
 
-            if (Properties.Resources.ResourceManager.GetObject("moon") is byte[] bytes)
-            {
-                using (Stream stream = new MemoryStream(bytes)) { bitmap = SKBitmap.Decode(stream); }
-            } 
+            //if (Properties.Resources.ResourceManager.GetObject("moon") is byte[] bytes)
+            //{
+            //    using (Stream stream = new MemoryStream(bytes)) { bitmap = SKBitmap.Decode(stream); }
+            //} 
+
+            string data = string.Empty;
+            try { 
+                data = File.ReadAllText(Settings.worldMapFileName);
+                worldmap = JsonSerializer.Deserialize<List<Something>>(data);
+            }
+            catch {}
 
             mainCanvasView = canvasView;
             globalSettings = new Settings(canvasView.Width, canvasView.Height);
@@ -44,7 +54,39 @@ namespace Game
                 Something obj = new Cat(globalSettings);//Something();
                 obj.SetXY(new SKPoint(new Random().Next(0, 400), new Random().Next(0, 200)));
                 objects.Add(obj);
-                break;
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                Something obj = new Dog(globalSettings);//Something();
+                obj.SetXY(new SKPoint(new Random().Next(0, 400), new Random().Next(0, 200)));
+                objects.Add(obj);
+            }
+
+            //Showing wall1 = new Showing(globalSettings, "Wall1");
+            //worldmap.Add(wall1);
+
+            float y = (float)globalSettings.Height - globalSettings.SpriteSize.Height;
+            for (int i = 0; i < globalSettings.Width / globalSettings.SpriteSize.Width; i++)
+            {
+                Showing wallU = new Showing(globalSettings, "Wall1");
+                wallU.PosXY = new SKPoint(i* globalSettings.SpriteSize.Width, 0);
+                Showing wallD = new Showing(globalSettings, "Wall1");
+                wallD.PosXY = new SKPoint( i * globalSettings.SpriteSize.Width, y);
+
+                worldmap.Add(wallU);
+                worldmap.Add(wallD);
+            }
+            float x = (float)globalSettings.Width - globalSettings.SpriteSize.Width;
+            for (int i = 1; i < globalSettings.Height/ globalSettings.SpriteSize.Height - 1; i++)
+            {
+                Showing wallU = new Showing(globalSettings, "Wall1");
+                wallU.PosXY = new SKPoint(0, i * globalSettings.SpriteSize.Height);
+                Showing wallD = new Showing(globalSettings, "Wall1");
+                wallD.PosXY = new SKPoint(x, i * globalSettings.SpriteSize.Height);
+
+                worldmap.Add(wallU);
+                worldmap.Add(wallD);
             }
 
             var renderThread = new Thread(new ThreadStart(AnimatiomLoop));
@@ -89,15 +131,11 @@ namespace Game
             // Заливаем весь фон канвы заданным цветом (иначе говоря - очищаем фон)
             canvas.Clear(globalSettings.backgroundColour);
 
-            //Отрисовываем фон игрового мира (карту)
-            //if (bitmap != null)
-            //{
-            //    using (SKPaint paint = new SKPaint())
-            //    {
-            //        paint.BlendMode = SKBlendMode.Multiply;
-            //        canvas.DrawBitmap(bitmap, (float)mainCanvasView.Width / 2 - bitmap.Width / 2, (float)mainCanvasView.Height / 2 - bitmap.Height / 2, paint);
-            //    }
-            //}
+            //Отрисовываем фон игрового мира(карту)
+            for(int i = 0; i < worldmap.Count; i++) {
+                worldmap[i].Draw(canvas, args);
+            }
+
             //Отрисовываем все объекты игрового мира
             foreach (var item in objects)
             {

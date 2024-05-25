@@ -148,7 +148,34 @@
   <data name="CatUpStep2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Graphics\images\1714798922554.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="moon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Graphics\images\moon.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="DogDownStep1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\images\Dog\DogDownStep1.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DogDownStep2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\images\Dog\DogDownStep2.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DogLeftStep1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\images\Dog\DogLeftStep1.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DogLeftStep2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\images\Dog\DogLeftStep2.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DogRightStep1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\images\Dog\DogRightStep1.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DogRightStep2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\images\Dog\DogRightStep2.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DogUpStep1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\images\Dog\DogUpStep1.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DogUpStep2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\images\Dog\DogUpStep2.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tanki" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\images\tanki.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Wall1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\images\Wall1.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

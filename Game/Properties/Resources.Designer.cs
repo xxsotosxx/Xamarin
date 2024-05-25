@@ -163,9 +163,99 @@ namespace Game.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Byte[].
         /// </summary>
-        internal static byte[] moon {
+        internal static byte[] DogDownStep1 {
             get {
-                object obj = ResourceManager.GetObject("moon", resourceCulture);
+                object obj = ResourceManager.GetObject("DogDownStep1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] DogDownStep2 {
+            get {
+                object obj = ResourceManager.GetObject("DogDownStep2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] DogLeftStep1 {
+            get {
+                object obj = ResourceManager.GetObject("DogLeftStep1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] DogLeftStep2 {
+            get {
+                object obj = ResourceManager.GetObject("DogLeftStep2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] DogRightStep1 {
+            get {
+                object obj = ResourceManager.GetObject("DogRightStep1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] DogRightStep2 {
+            get {
+                object obj = ResourceManager.GetObject("DogRightStep2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] DogUpStep1 {
+            get {
+                object obj = ResourceManager.GetObject("DogUpStep1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] DogUpStep2 {
+            get {
+                object obj = ResourceManager.GetObject("DogUpStep2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] tanki {
+            get {
+                object obj = ResourceManager.GetObject("tanki", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] Wall1 {
+            get {
+                object obj = ResourceManager.GetObject("Wall1", resourceCulture);
                 return ((byte[])(obj));
             }
         }

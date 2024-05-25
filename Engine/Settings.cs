@@ -1,11 +1,17 @@
 ﻿using SkiaSharp;
 using System;
+using System.ComponentModel;
 
 namespace Engine
 {
     public class Settings
     {
-        public int КоличествоСпрайтовНаГлавнойОси = 50;
+        //ublic static Settings instance = new Settings();
+
+        public const string worldMapFileName = "worldmap.json";
+        public const string SaveLoadFileName = "saveload.json";
+
+        public int КоличествоСпрайтовНаГлавнойОси = 60;
         
         private SKSize _spriteSize = SKSize.Empty;
 

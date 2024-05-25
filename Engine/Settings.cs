@@ -1,9 +1,18 @@
 ﻿using SkiaSharp;
 using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Engine
 {
+
+    public static class GameWorld
+    {
+        public static ConcurrentBag<Something> objects = new ConcurrentBag<Something>();
+        public static List<Something> map = new List<Something>();
+    }
+
     public class Settings
     {
         //ublic static Settings instance = new Settings();

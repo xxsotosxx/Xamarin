@@ -13,6 +13,7 @@ using SkiaSharp.Views.Forms;
 
 using Game.Logic.Classes;
 using Engine;
+using System.Linq;
 
 
 namespace Game
@@ -22,10 +23,8 @@ namespace Game
         /// <summary>
         /// В этой коллекции (потокобезопасном списке) хранятся все "живые" объекты игрового мира
         /// </summary>
-        internal static ConcurrentBag<Something> objects = new ConcurrentBag<Something>();
-        internal static List<Something> worldmap = new List<Something>();
         internal static SKCanvasView mainCanvasView;
-        internal static SKBitmap bitmap = null;
+//        internal static SKBitmap bitmap = null;
         internal static Settings globalSettings = null;
 
 
@@ -42,7 +41,7 @@ namespace Game
             string data = string.Empty;
             try { 
                 data = File.ReadAllText(Settings.worldMapFileName);
-                worldmap = JsonSerializer.Deserialize<List<Something>>(data);
+                GameWorld.map = JsonSerializer.Deserialize<List<Something>>(data);
             }
             catch {}
 
@@ -53,14 +52,14 @@ namespace Game
             {
                 Something obj = new Cat(globalSettings);//Something();
                 obj.SetXY(new SKPoint(new Random().Next(0, 400), new Random().Next(0, 200)));
-                objects.Add(obj);
+                GameWorld.objects.Add(obj);
             }
 
             for (int i = 0; i < 10; i++)
             {
                 Something obj = new Dog(globalSettings);//Something();
                 obj.SetXY(new SKPoint(new Random().Next(0, 400), new Random().Next(0, 200)));
-                objects.Add(obj);
+                GameWorld.objects.Add(obj);
             }
 
             //Showing wall1 = new Showing(globalSettings, "Wall1");
@@ -74,8 +73,8 @@ namespace Game
                 Showing wallD = new Showing(globalSettings, "Wall1");
                 wallD.PosXY = new SKPoint( i * globalSettings.SpriteSize.Width, y);
 
-                worldmap.Add(wallU);
-                worldmap.Add(wallD);
+                GameWorld.map.Add(wallU);
+                GameWorld.map.Add(wallD);
             }
             float x = (float)globalSettings.Width - globalSettings.SpriteSize.Width;
             for (int i = 1; i < globalSettings.Height/ globalSettings.SpriteSize.Height - 1; i++)
@@ -85,8 +84,8 @@ namespace Game
                 Showing wallD = new Showing(globalSettings, "Wall1");
                 wallD.PosXY = new SKPoint(x, i * globalSettings.SpriteSize.Height);
 
-                worldmap.Add(wallU);
-                worldmap.Add(wallD);
+                GameWorld.map.Add(wallU);
+                GameWorld.map.Add(wallD);
             }
 
             var renderThread = new Thread(new ThreadStart(AnimatiomLoop));
@@ -95,7 +94,7 @@ namespace Game
 
         public static void Rearange(SKCanvasView canvasView)
         {
-            if (objects.Count == 0) Init(canvasView);
+            if (GameWorld.objects.Count == 0) Init(canvasView);
             //TODO: Если размер канвы изменился - нужно пересчитать размеры спрайтов
         }
 
@@ -110,7 +109,7 @@ namespace Game
                 case SKTouchAction.Pressed:
                     var obj = new Cat(globalSettings);
                     if (obj.SetXY(new SKPoint(e.Location.X - globalSettings.SpriteSize.Width / 2,e.Location.Y - globalSettings.SpriteSize.Height / 2)))
-                        objects.Add(obj);
+                        GameWorld.objects.Add(obj);
                     break;
                 case SKTouchAction.Moved:
                     break;
@@ -132,15 +131,20 @@ namespace Game
             canvas.Clear(globalSettings.backgroundColour);
 
             //Отрисовываем фон игрового мира(карту)
-            for(int i = 0; i < worldmap.Count; i++) {
-                worldmap[i].Draw(canvas, args);
+            for(int i = 0; i < GameWorld.map.Count; i++) {
+                GameWorld.map[i].Draw(canvas, args);
             }
 
             //Отрисовываем все объекты игрового мира
-            foreach (var item in objects)
+            //var LiveObjects = GameWorld.objects.Where(i => i.isInGame = true);
+            foreach (var item in GameWorld.objects)
             {
-                if (item is IAnimated animatedItem) animatedItem.doAnimate(canvas, args);
-                else item.Draw(canvas, args);
+                if (item.isInGame)
+                {
+
+                    if (item is IAnimated animatedItem) animatedItem.doAnimate(canvas, args);
+                    else item.Draw(canvas, args);
+                }
 
 #if DEBUG_GRAPHICS
                 SKPaint p = new SKPaint()
@@ -148,8 +152,8 @@ namespace Game
                     Color = SKColors.Black,
                     Style = SKPaintStyle.Stroke,
                 };
-                canvas.DrawRect(item.rect,p);
-            canvas.TextStrokeHead(globalSettings, $"Популяция существ: {objects.Count}") ;
+            canvas.DrawRect(item.rect,p);
+            canvas.TextStrokeHead(globalSettings, $"Популяция существ: {GameWorld.objects.Count}") ;
 #endif
             }
             // Выводим статистику по игре
@@ -166,7 +170,7 @@ namespace Game
             Stopwatch stopwatch = Stopwatch.StartNew();
             while (true)
             {
-                foreach (var item in objects) item.Animate();
+                foreach (var item in GameWorld.objects) item.Animate();
 
                 double msToWait = minFramePeriodMsec - stopwatch.ElapsedMilliseconds;
                 if (msToWait > 0) Thread.Sleep(1); //Thread.Sleep((int)msToWait);

@@ -3,6 +3,7 @@ using SkiaSharp;
 
 
 using Engine.Graphics;
+using System.Linq;
 
 
 namespace Engine
@@ -36,6 +37,7 @@ namespace Engine
         protected MoveDirection moveDirection;
         protected float speed;
         protected static readonly Random random = new Random();
+        public bool isInGame = true;
 
         public string Name;
 
@@ -52,13 +54,47 @@ namespace Engine
             set { PosXY.X = value; }
         }
 
+        public enum CollisionType { ChangeDirection, Continue, Destroy }
+
+        public virtual CollisionType GetCollisionType()
+        {
+            return CollisionType.Destroy;
+        }
+
         public SKRect rect;
         private SKColor color => SKColor.FromHsl(sHost.ОсновнойОттенокФона, 100, 20, 150 );
 
-        public bool isCollision(SKRect nr)
+        public bool isCollision(SKRect targetRect)
         {
             //TODO: Требуется оптимизация
-            return !(nr.Left >= 0 && nr.Top >= 0 && nr.Right < sHost.Width && nr.Bottom < sHost.Height);
+            var isWorldCollision = !(targetRect.Left >= 0 && targetRect.Top >= 0 && targetRect.Right < sHost.Width && targetRect.Bottom < sHost.Height);
+
+            string thisName = GetType().Name;
+
+            //var LiveObjects = GameWorld.objects.Where(i => i.isInGame = true);
+
+            foreach (var item in GameWorld.objects)
+            {
+                string name = item.GetType().Name;
+                if (!item.isInGame || thisName == name) continue;
+
+                if (item.rect.IntersectsWith(targetRect))
+                {                
+                    switch (GetCollisionType())
+                    {
+                        case CollisionType.Continue:
+                            continue;
+                        case CollisionType.Destroy:
+                            item.isInGame = false;
+                            break;
+                        case CollisionType.ChangeDirection:
+                            moveDirection = (MoveDirection)(((int)moveDirection + 1) % (int)MoveDirection.Влево);
+                            break;
+                    }
+                }
+            }
+
+            return isWorldCollision;
         }
 
         public Something(Settings settingsHost, string Name) {
@@ -127,7 +163,7 @@ namespace Engine
         {
             if (param == null)
             {
-                moveDirection = (MoveDirection)random.Next(1, 5);
+                moveDirection = (MoveDirection)random.Next(0, 4);
             }
         }
     }

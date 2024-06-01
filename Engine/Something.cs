@@ -41,23 +41,30 @@ namespace Engine
         public string Name;
 
         public Position Pos = new Position();
-        public SKPoint PosXY;
+        //public SKPoint PosXY;
 
-        public float PosX {
-            get => Pos.col * sHost.SpriteSize.Width;
-            set { PosXY.X = value; }
-        }
-        public float PosY
-        {
-            get => Pos.row * sHost.SpriteSize.Height;
-            set { PosXY.X = value; }
-        }
+        //public float PosX {
+        //    get => Pos.col * sHost.SpriteSize.Width;
+        //    set { PosXY.X = value; }
+        //}
+        //public float PosY
+        //{
+        //    get => Pos.row * sHost.SpriteSize.Height;
+        //    set { PosXY.X = value; }
+        //}
 
         public enum CollisionType { ChangeDirection, Continue, Destroy }
 
         public virtual CollisionType GetCollisionType(Something targteObject)
         {
             return CollisionType.Destroy;
+        }
+
+        public enum ShowingColision { yes, no };
+
+        public virtual ShowingColision ShowingColisionAnswer(Showing targetObject)
+        {
+            return ShowingColision.yes;
         }
 
         public SKRect rect;
@@ -70,9 +77,25 @@ namespace Engine
             var isWorldCollision = !(targetRect.Left >= 0 && targetRect.Top >= 0 && 
                 targetRect.Right < sHost.bounds.Width && targetRect.Bottom < sHost.bounds.Height);
 
+            if (isWorldCollision) return true;
+
             string thisName = GetType().Name;
 
-            //var LiveObjects = GameWorld.objects.Where(i => i.isInGame = true);
+            foreach (var showObj in GameWorld.map)
+            {
+                if (targetRect.IntersectsWith(showObj.rect))
+                //if (showObj.rect.IntersectsWith(targetRect))
+                {
+                    switch (ShowingColisionAnswer(showObj))
+                    {
+                        case ShowingColision.yes:
+                            moveDirection = (MoveDirection)(((int)moveDirection + 1) % (int)MoveDirection.Влево);
+                            return true;
+                        case ShowingColision.no:
+                            break;
+                    }
+                }
+            }
 
             foreach (var item in GameWorld.objects)
             {
@@ -80,7 +103,7 @@ namespace Engine
                 if (!item.isInGame || thisName == name) continue;
 
                 if (item.rect.IntersectsWith(targetRect))
-                {                
+                {
                     switch (GetCollisionType(item))
                     {
                         case CollisionType.Continue:

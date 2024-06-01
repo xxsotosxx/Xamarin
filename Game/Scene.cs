@@ -18,8 +18,11 @@ using System.Linq;
 
 namespace Game
 {
+
     public static class Scene
     {
+        public static string labirint = "{{\"x\" : \"64\", \"y\" : \"64\"}}"; //, {'x' = '96', 'y' = '64' }, {'x' = '64' , 'y' = '96'}}";
+
         /// <summary>
         /// В этой коллекции (потокобезопасном списке) хранятся все "живые" объекты игрового мира
         /// </summary>
@@ -27,7 +30,10 @@ namespace Game
 //        internal static SKBitmap bitmap = null;
         internal static Settings globalSettings = null;
 
-
+        internal class smartPoint
+        {
+            int x; int y;
+        }
         /// <summary>
         /// Создание "живых" существ при старте программы. В дальнейшем будем загружать из файла сохраненных объектов
         /// </summary>
@@ -71,9 +77,9 @@ namespace Game
             for (int i = 0; i < globalSettings.bounds.Width / globalSettings.SpriteSize.Width; i++)
             {
                 Showing wallU = new Showing(bitmap, globalSettings, "Wall1");
-                wallU.PosXY = new SKPoint(i* globalSettings.SpriteSize.Width, 0);
+                wallU.rect = SKRect.Create(i* globalSettings.SpriteSize.Width, 0, globalSettings.SpriteSize.Width, globalSettings.SpriteSize.Height);
                 Showing wallD = new Showing(bitmap, globalSettings, "Wall1");
-                wallD.PosXY = new SKPoint( i * globalSettings.SpriteSize.Width, y);
+                wallD.rect = SKRect.Create(i * globalSettings.SpriteSize.Width, y, globalSettings.SpriteSize.Width, globalSettings.SpriteSize.Height);
 
                 GameWorld.map.Add(wallU);
                 GameWorld.map.Add(wallD);
@@ -82,13 +88,20 @@ namespace Game
             for (int i = 1; i < globalSettings.bounds.Height/ globalSettings.SpriteSize.Height - 1; i++)
             {
                 Showing wallU = new Showing(bitmap, globalSettings, "Wall1");
-                wallU.PosXY = new SKPoint(0, i * globalSettings.SpriteSize.Height);
+                wallU.rect = SKRect.Create(0, i * globalSettings.SpriteSize.Height, globalSettings.SpriteSize.Width, globalSettings.SpriteSize.Height);
                 Showing wallD = new Showing(bitmap, globalSettings, "Wall1");
-                wallD.PosXY = new SKPoint(x, i * globalSettings.SpriteSize.Height);
+                wallD.rect = SKRect.Create(x, i * globalSettings.SpriteSize.Height, globalSettings.SpriteSize.Width, globalSettings.SpriteSize.Height);
 
                 GameWorld.map.Add(wallU);
                 GameWorld.map.Add(wallD);
             }
+
+            List<smartPoint> l = JsonSerializer.Deserialize<List<smartPoint>>(labirint);
+            foreach (var item in l)
+            {
+
+            }
+
             var renderThread = new Timer((p) => { AnimatiomLoopTimer(); });
             renderThread.Change(0, 10);
 
@@ -137,6 +150,15 @@ namespace Game
             //Отрисовываем фон игрового мира(карту)
             for(int i = 0; i < GameWorld.map.Count; i++) {
                 GameWorld.map[i].Draw(canvas, args);
+#if DEBUG_GRAPHICS
+                SKPaint p = new SKPaint()
+                {
+                    Color = SKColors.Yellow,
+                    Style = SKPaintStyle.Stroke,
+                    StrokeWidth = 3
+                };
+                canvas.DrawRect(GameWorld.map[i].rect, p);
+#endif
             }
 
             //Отрисовываем все объекты игрового мира

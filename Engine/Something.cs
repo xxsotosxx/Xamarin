@@ -3,7 +3,6 @@ using SkiaSharp;
 
 
 using Engine.Graphics;
-using System.Linq;
 
 
 namespace Engine
@@ -56,7 +55,7 @@ namespace Engine
 
         public enum CollisionType { ChangeDirection, Continue, Destroy }
 
-        public virtual CollisionType GetCollisionType()
+        public virtual CollisionType GetCollisionType(Something targteObject)
         {
             return CollisionType.Destroy;
         }
@@ -67,7 +66,9 @@ namespace Engine
         public bool isCollision(SKRect targetRect)
         {
             //TODO: Требуется оптимизация
-            var isWorldCollision = !(targetRect.Left >= 0 && targetRect.Top >= 0 && targetRect.Right < sHost.Width && targetRect.Bottom < sHost.Height);
+            //var isWorldCollision = !targetRect.IntersectsWithInclusive(sHost.bounds);
+            var isWorldCollision = !(targetRect.Left >= 0 && targetRect.Top >= 0 && 
+                targetRect.Right < sHost.bounds.Width && targetRect.Bottom < sHost.bounds.Height);
 
             string thisName = GetType().Name;
 
@@ -80,12 +81,13 @@ namespace Engine
 
                 if (item.rect.IntersectsWith(targetRect))
                 {                
-                    switch (GetCollisionType())
+                    switch (GetCollisionType(item))
                     {
                         case CollisionType.Continue:
                             continue;
                         case CollisionType.Destroy:
                             item.isInGame = false;
+                            //GameWorld.objects.Remove(item);
                             break;
                         case CollisionType.ChangeDirection:
                             moveDirection = (MoveDirection)(((int)moveDirection + 1) % (int)MoveDirection.Влево);
@@ -93,7 +95,6 @@ namespace Engine
                     }
                 }
             }
-
             return isWorldCollision;
         }
 

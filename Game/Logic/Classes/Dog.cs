@@ -52,6 +52,12 @@ namespace Game.Logic.Classes
                 canvas.DrawBitmap(GamePrepare.AllImages[frameName], rect);
         }
 
+        public override CollisionType GetCollisionType(Something targteObject)
+        {
+            if (targteObject is Cat cat) return CollisionType.Destroy;
+            else return CollisionType.Continue;
+        }
+
         public override void onCollision(Action<Something, Something> param)
         {
             base.onCollision(param);

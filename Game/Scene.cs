@@ -41,12 +41,12 @@ namespace Game
             string data = string.Empty;
             try { 
                 data = File.ReadAllText(Settings.worldMapFileName);
-                GameWorld.map = JsonSerializer.Deserialize<List<Something>>(data);
+                GameWorld.map = JsonSerializer.Deserialize<List<Showing>>(data);
             }
             catch {}
 
             mainCanvasView = canvasView;
-            globalSettings = new Settings(canvasView.Width, canvasView.Height);
+            globalSettings = new Settings(new SKRect(0,0, (float)canvasView.Width, (float)canvasView.Height) /*canvasView.Width, canvasView.Height*/);
 
             for (int i = 0; i < 10; i++)
             {
@@ -65,31 +65,35 @@ namespace Game
             //Showing wall1 = new Showing(globalSettings, "Wall1");
             //worldmap.Add(wall1);
 
-            float y = (float)globalSettings.Height - globalSettings.SpriteSize.Height;
-            for (int i = 0; i < globalSettings.Width / globalSettings.SpriteSize.Width; i++)
+            var bitmap = Properties.Resources.ResourceManager.GetObject("Wall1");
+
+            float y = (float)globalSettings.bounds.Height - globalSettings.SpriteSize.Height;
+            for (int i = 0; i < globalSettings.bounds.Width / globalSettings.SpriteSize.Width; i++)
             {
-                Showing wallU = new Showing(globalSettings, "Wall1");
+                Showing wallU = new Showing(bitmap, globalSettings, "Wall1");
                 wallU.PosXY = new SKPoint(i* globalSettings.SpriteSize.Width, 0);
-                Showing wallD = new Showing(globalSettings, "Wall1");
+                Showing wallD = new Showing(bitmap, globalSettings, "Wall1");
                 wallD.PosXY = new SKPoint( i * globalSettings.SpriteSize.Width, y);
 
                 GameWorld.map.Add(wallU);
                 GameWorld.map.Add(wallD);
             }
-            float x = (float)globalSettings.Width - globalSettings.SpriteSize.Width;
-            for (int i = 1; i < globalSettings.Height/ globalSettings.SpriteSize.Height - 1; i++)
+            float x = (float)globalSettings.bounds.Width - globalSettings.SpriteSize.Width;
+            for (int i = 1; i < globalSettings.bounds.Height/ globalSettings.SpriteSize.Height - 1; i++)
             {
-                Showing wallU = new Showing(globalSettings, "Wall1");
+                Showing wallU = new Showing(bitmap, globalSettings, "Wall1");
                 wallU.PosXY = new SKPoint(0, i * globalSettings.SpriteSize.Height);
-                Showing wallD = new Showing(globalSettings, "Wall1");
+                Showing wallD = new Showing(bitmap, globalSettings, "Wall1");
                 wallD.PosXY = new SKPoint(x, i * globalSettings.SpriteSize.Height);
 
                 GameWorld.map.Add(wallU);
                 GameWorld.map.Add(wallD);
             }
+            var renderThread = new Timer((p) => { AnimatiomLoopTimer(); });
+            renderThread.Change(0, 10);
 
-            var renderThread = new Thread(new ThreadStart(AnimatiomLoop));
-            renderThread.Start();
+            //var renderThread = new Thread(new ThreadStart(AnimatiomLoop));
+            //renderThread.Start();
         }
 
         public static void Rearange(SKCanvasView canvasView)
@@ -162,7 +166,18 @@ namespace Game
         /// <summary>
         /// Главный цикл анимации игрового мира.
         /// </summary>
-        private static void AnimatiomLoop()
+
+        private static void AnimatiomLoopTimer()
+        {
+            foreach (var item in GameWorld.objects)
+                if (item.isInGame)
+                    item.Animate();
+
+            mainCanvasView.InvalidateSurface();
+        }
+
+
+        private static void AnimatiomLoopThread()
         {
             double maxFPS = 60;
             double minFramePeriodMsec = 1000.0 / maxFPS;
@@ -170,7 +185,9 @@ namespace Game
             Stopwatch stopwatch = Stopwatch.StartNew();
             while (true)
             {
-                foreach (var item in GameWorld.objects) item.Animate();
+                foreach (var item in GameWorld.objects)
+                    if (item.isInGame)
+                        item.Animate();
 
                 double msToWait = minFramePeriodMsec - stopwatch.ElapsedMilliseconds;
                 if (msToWait > 0) Thread.Sleep(1); //Thread.Sleep((int)msToWait);

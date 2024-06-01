@@ -2,15 +2,16 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.ComponentModel;
+
 
 namespace Engine
 {
 
     public static class GameWorld
     {
-        public static ConcurrentBag<Something> objects = new ConcurrentBag<Something>();
-        public static List<Something> map = new List<Something>();
+        //public static ConcurrentBag<Something> objects = new ConcurrentBag<Something>();
+        public static List<Something> objects = new List<Something>();
+        public static List<Showing> map = new List<Showing>();
     }
 
     public class Settings
@@ -30,12 +31,14 @@ namespace Engine
         public SKColor lightColour => SKColor.FromHsl(ОсновнойОттенокСвета, 100, 90, 255);
 
         //Размеры игровой сцены
-        public readonly double Width;
-        public readonly double Height;
+        //public readonly double Width;
+        //public readonly double Height;
+        public readonly SKRect bounds = SKRect.Empty;
 
-        public Settings(double Width, double Height)
+        public Settings(SKRect bounds)
         {
-            this.Width = Width; this.Height = Height;
+            //this.Width = Width; this.Height = Height;
+            this.bounds = bounds;
         }
 
 
@@ -46,8 +49,8 @@ namespace Engine
             get {
                 if (_spriteSize == SKSize.Empty)
                 {
-                    var lwidh = Width;
-                    var lheight = Width;
+                    var lwidh = bounds.Width;
+                    var lheight = bounds.Height;
                     _spriteSize = new SKSize();
                     _spriteSize.Width = lwidh >= lheight
                         ? Convert.ToInt64(lwidh) / КоличествоСпрайтовНаГлавнойОси

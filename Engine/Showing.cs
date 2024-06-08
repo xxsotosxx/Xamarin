@@ -13,6 +13,18 @@ namespace Engine
                 using (Stream stream = new MemoryStream(bytes)) { bitmap = SKBitmap.Decode(stream); }
             }
         }
+        public Showing(Settings settingsHost, string Name, SKBitmap bitmapDefault) : base(settingsHost, Name)
+        {
+            if (GameWorld.ShowingImageLibrary.TryGetValue(Name, out var res) )
+            {
+                bitmap = res;
+            } else
+            {
+                this.bitmap = bitmapDefault;
+            }
+        }
+
+
         public override void Draw(SKCanvas canvas, object args)
         {
             SKRect rect1 = new SKRect(0, 0, bitmap.Width, bitmap.Height);

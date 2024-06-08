@@ -41,27 +41,54 @@ namespace Game
         /// Создание "живых" существ при старте программы. В дальнейшем будем загружать из файла сохраненных объектов
         /// </summary>
         public static void Init(SKCanvasView canvasView) {
-
-            //if (Properties.Resources.ResourceManager.GetObject("moon") is byte[] bytes)
-            //{
-            //    using (Stream stream = new MemoryStream(bytes)) { bitmap = SKBitmap.Decode(stream); }
-            //} 
-
-            var bitmap = Properties.Resources.ResourceManager.GetObject("Wall1");
             mainCanvasView = canvasView;
             globalSettings = new Settings(new SKRect(0, 0, (float)canvasView.Width, (float)canvasView.Height) /*canvasView.Width, canvasView.Height*/);
 
+            #region Загрузка Композиций спрайтов
+            var resTanki = Properties.Resources.ResourceManager.GetObject("tanki");
+            if (resTanki is byte[] bytes)
+            {
+                SKBitmap tanki;
+                using (Stream stream = new MemoryStream(bytes)) { tanki = SKBitmap.Decode(stream); }
+                const int blockWidth = 8;
+                const int blockHeight = 4;
+                int bWidth = tanki.Width / blockWidth;
+                int bHeight = tanki.Height / blockHeight;
+                for (int row = 0; row < blockHeight; row++)
+                {
+                    for (int col = 0; col < blockWidth; col++)
+                    {
+                        SKRectI rect = SKRectI.Create(bWidth, bHeight);
+                        rect.Offset(col * bWidth, row * bHeight);
+                        SKBitmap spriteOrigin = new SKBitmap(bWidth, bHeight);
+                        if (!tanki.ExtractSubset(spriteOrigin, rect)) return;
+                        var sprite = spriteOrigin.Resize(globalSettings.spriteSizeI, SKFilterQuality.High);
+                        GameWorld.ShowingImageLibrary.Add($"Tank{col}_{row}", sprite);
+                    }
+                }
+            }
+            #endregion Загрузка Композиций спрайтов
+
+            #region Загрузка карты (Биом)
+            var bitmap = Properties.Resources.ResourceManager.GetObject("Wall1");
+            SKBitmap bitmapWall = null;
+            if (bitmap is byte[] bytesWall)
+            {
+                using (Stream stream = new MemoryStream(bytesWall)) { bitmapWall = SKBitmap.Decode(stream); }
+            }
+ 
             string data = string.Empty;
             try { 
                 data = File.ReadAllText(Settings.worldMapFileName);
                 GameWorld.gameMap = JsonSerializer.Deserialize<JsonMap>(data);
                 foreach (var item in GameWorld.gameMap.Biom)
                 {
-                    item.obj = new Showing(bitmap, globalSettings, item.blockType);
+                    item.obj = new Showing( globalSettings, item.blockType, bitmapWall);
                     item.obj.rect = SKRect.Create(new SKPoint(item.x, item.y), globalSettings.spriteSize);//  //.SetXY(new SKPoint(item.x, item.y));
                 }
             }
-            catch {}
+            catch { return; }
+            #endregion Загрузка карты (Биом)
 
             for (int i = 0; i < 10; i++)
             {
@@ -77,9 +104,8 @@ namespace Game
                 GameWorld.objects.Add(obj);
             }
 
-            //Showing wall1 = new Showing(globalSettings, "Wall1");
-            //worldmap.Add(wall1);
 
+            #region Стенки по периметру 
             float y = (float)globalSettings.bounds.Height - globalSettings.SpriteSize.Height;
             for (int i = 0; i < globalSettings.bounds.Width / globalSettings.SpriteSize.Width; i++)
             {
@@ -88,8 +114,8 @@ namespace Game
                 Showing wallD = new Showing(bitmap, globalSettings, "Wall1");
                 wallD.rect = SKRect.Create(i * globalSettings.SpriteSize.Width, y, globalSettings.SpriteSize.Width, globalSettings.SpriteSize.Height);
 
-                GameWorld.gameMap.Biom.Add(new Joi wallU);
-                GameWorld.map.Add(wallD);
+                GameWorld.gameMap.AddToBiom(wallU);
+                GameWorld.gameMap.AddToBiom(wallD);
             }
             float x = (float)globalSettings.bounds.Width - globalSettings.SpriteSize.Width;
             for (int i = 1; i < globalSettings.bounds.Height/ globalSettings.SpriteSize.Height - 1; i++)
@@ -99,21 +125,14 @@ namespace Game
                 Showing wallD = new Showing(bitmap, globalSettings, "Wall1");
                 wallD.rect = SKRect.Create(x, i * globalSettings.SpriteSize.Height, globalSettings.SpriteSize.Width, globalSettings.SpriteSize.Height);
 
-                //GameWorld.map.Add(wallU);
-                //GameWorld.map.Add(wallD);
+                GameWorld.gameMap.AddToBiom(wallU);
+                GameWorld.gameMap.AddToBiom(wallD);
             }
-
-            //List<smartPoint> l = JsonSerializer.Deserialize<List<smartPoint>>(labirint);
-            //foreach (var item in l)
-            //{
-
-            //}
+            #endregion Стенки по периметру 
 
             var renderThread = new Timer((p) => { AnimatiomLoopTimer(); });
             renderThread.Change(0, 10);
 
-            //var renderThread = new Thread(new ThreadStart(AnimatiomLoop));
-            //renderThread.Start();
         }
 
         public static void Rearange(SKCanvasView canvasView)

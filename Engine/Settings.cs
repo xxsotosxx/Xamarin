@@ -13,16 +13,16 @@ namespace Engine
             public int y { get; set; }
             public string blockType { get; set; }
             public Showing obj;
-            public ShowingObj(Showing obj)
-            {
-                this.obj = obj;
-            }
+            //public ShowingObj(Showing obj)
+            //{
+            //    this.obj = obj;
+            //}
         }
 
         public List<ShowingObj> Biom { get; set; }
         public void AddToBiom(Showing shObj)
         {
-
+            Biom.Add(new ShowingObj() { obj = shObj });
         }
     }
 
@@ -31,6 +31,8 @@ namespace Engine
         //public static ConcurrentBag<Something> objects = new ConcurrentBag<Something>();
         public static List<Something> objects = new List<Something>();
         public static JsonMap gameMap = new JsonMap();
+
+        public static Dictionary<string, SKBitmap> ShowingImageLibrary= new Dictionary<string, SKBitmap>();
     }
 
     public class Settings
@@ -44,6 +46,7 @@ namespace Engine
         
         private SKSize _spriteSize = SKSize.Empty;
         public SKSize spriteSize { get => _spriteSize; }
+        public SKSizeI spriteSizeI { get => new SKSizeI((int)SpriteSize.Width, (int)SpriteSize.Height); }
 
         public int ОсновнойОттенокФона = 120;
         public int ОсновнойОттенокСвета = 60;
@@ -67,16 +70,18 @@ namespace Engine
         /// </summary>
         public SKSize SpriteSize { 
             get {
-                if (_spriteSize == SKSize.Empty)
-                {
-                    var lwidh = bounds.Width;
-                    var lheight = bounds.Height;
-                    _spriteSize = new SKSize();
-                    _spriteSize.Width = lwidh >= lheight
-                        ? Convert.ToInt64(lwidh) / КоличествоСпрайтовНаГлавнойОси
-                        : Convert.ToInt64(lheight) / КоличествоСпрайтовНаГлавнойОси;
-                    _spriteSize.Height = _spriteSize.Width;
-                }
+                //if (_spriteSize == SKSize.Empty)
+                //{
+                //    var lwidh = bounds.Width;
+                //    var lheight = bounds.Height;
+                //    _spriteSize = new SKSize();
+                //    _spriteSize.Width = lwidh >= lheight
+                //        ? Convert.ToInt64(lwidh) / КоличествоСпрайтовНаГлавнойОси
+                //        : Convert.ToInt64(lheight) / КоличествоСпрайтовНаГлавнойОси;
+                //    _spriteSize.Height = _spriteSize.Width;
+                //}
+                //return _spriteSize;
+                _spriteSize = new SKSize(32,32);
                 return _spriteSize;
             }
         }

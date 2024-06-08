@@ -1,17 +1,36 @@
 ﻿using SkiaSharp;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 
 namespace Engine
 {
+    public class JsonMap
+    {
+        public class ShowingObj
+        {
+            public int x { get; set; }
+            public int y { get; set; }
+            public string blockType { get; set; }
+            public Showing obj;
+            public ShowingObj(Showing obj)
+            {
+                this.obj = obj;
+            }
+        }
+
+        public List<ShowingObj> Biom { get; set; }
+        public void AddToBiom(Showing shObj)
+        {
+
+        }
+    }
 
     public static class GameWorld
     {
         //public static ConcurrentBag<Something> objects = new ConcurrentBag<Something>();
         public static List<Something> objects = new List<Something>();
-        public static List<Showing> map = new List<Showing>();
+        public static JsonMap gameMap = new JsonMap();
     }
 
     public class Settings
@@ -24,6 +43,7 @@ namespace Engine
         public int КоличествоСпрайтовНаГлавнойОси = 60;
         
         private SKSize _spriteSize = SKSize.Empty;
+        public SKSize spriteSize { get => _spriteSize; }
 
         public int ОсновнойОттенокФона = 120;
         public int ОсновнойОттенокСвета = 60;

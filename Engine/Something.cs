@@ -81,12 +81,12 @@ namespace Engine
 
             string thisName = GetType().Name;
 
-            foreach (var showObj in GameWorld.map)
+            foreach (var showObj in GameWorld.gameMap.Biom)
             {
-                if (targetRect.IntersectsWith(showObj.rect))
+                if (targetRect.IntersectsWith(showObj.obj.rect))
                 //if (showObj.rect.IntersectsWith(targetRect))
                 {
-                    switch (ShowingColisionAnswer(showObj))
+                    switch (ShowingColisionAnswer(showObj.obj))
                     {
                         case ShowingColision.yes:
                             moveDirection = (MoveDirection)(((int)moveDirection + 1) % (int)MoveDirection.Влево);

@@ -13,7 +13,6 @@ using SkiaSharp.Views.Forms;
 
 using Game.Logic.Classes;
 using Engine;
-using System.Linq;
 
 
 namespace Game
@@ -21,8 +20,7 @@ namespace Game
 
     public static class Scene
     {
-        public static string labirint = "{{\"x\" : \"64\", \"y\" : \"64\"}}"; //, {'x' = '96', 'y' = '64' }, {'x' = '64' , 'y' = '96'}}";
-
+  
         /// <summary>
         /// В этой коллекции (потокобезопасном списке) хранятся все "живые" объекты игрового мира
         /// </summary>
@@ -30,10 +28,15 @@ namespace Game
 //        internal static SKBitmap bitmap = null;
         internal static Settings globalSettings = null;
 
+        //public static object IDictiobary { get; private set; }
+
+
         internal class smartPoint
         {
             int x; int y;
         }
+
+
         /// <summary>
         /// Создание "живых" существ при старте программы. В дальнейшем будем загружать из файла сохраненных объектов
         /// </summary>
@@ -44,15 +47,21 @@ namespace Game
             //    using (Stream stream = new MemoryStream(bytes)) { bitmap = SKBitmap.Decode(stream); }
             //} 
 
+            var bitmap = Properties.Resources.ResourceManager.GetObject("Wall1");
+            mainCanvasView = canvasView;
+            globalSettings = new Settings(new SKRect(0, 0, (float)canvasView.Width, (float)canvasView.Height) /*canvasView.Width, canvasView.Height*/);
+
             string data = string.Empty;
             try { 
                 data = File.ReadAllText(Settings.worldMapFileName);
-                GameWorld.map = JsonSerializer.Deserialize<List<Showing>>(data);
+                GameWorld.gameMap = JsonSerializer.Deserialize<JsonMap>(data);
+                foreach (var item in GameWorld.gameMap.Biom)
+                {
+                    item.obj = new Showing(bitmap, globalSettings, item.blockType);
+                    item.obj.rect = SKRect.Create(new SKPoint(item.x, item.y), globalSettings.spriteSize);//  //.SetXY(new SKPoint(item.x, item.y));
+                }
             }
             catch {}
-
-            mainCanvasView = canvasView;
-            globalSettings = new Settings(new SKRect(0,0, (float)canvasView.Width, (float)canvasView.Height) /*canvasView.Width, canvasView.Height*/);
 
             for (int i = 0; i < 10; i++)
             {
@@ -71,8 +80,6 @@ namespace Game
             //Showing wall1 = new Showing(globalSettings, "Wall1");
             //worldmap.Add(wall1);
 
-            var bitmap = Properties.Resources.ResourceManager.GetObject("Wall1");
-
             float y = (float)globalSettings.bounds.Height - globalSettings.SpriteSize.Height;
             for (int i = 0; i < globalSettings.bounds.Width / globalSettings.SpriteSize.Width; i++)
             {
@@ -81,7 +88,7 @@ namespace Game
                 Showing wallD = new Showing(bitmap, globalSettings, "Wall1");
                 wallD.rect = SKRect.Create(i * globalSettings.SpriteSize.Width, y, globalSettings.SpriteSize.Width, globalSettings.SpriteSize.Height);
 
-                GameWorld.map.Add(wallU);
+                GameWorld.gameMap.Biom.Add(new Joi wallU);
                 GameWorld.map.Add(wallD);
             }
             float x = (float)globalSettings.bounds.Width - globalSettings.SpriteSize.Width;
@@ -92,15 +99,15 @@ namespace Game
                 Showing wallD = new Showing(bitmap, globalSettings, "Wall1");
                 wallD.rect = SKRect.Create(x, i * globalSettings.SpriteSize.Height, globalSettings.SpriteSize.Width, globalSettings.SpriteSize.Height);
 
-                GameWorld.map.Add(wallU);
-                GameWorld.map.Add(wallD);
+                //GameWorld.map.Add(wallU);
+                //GameWorld.map.Add(wallD);
             }
 
-            List<smartPoint> l = JsonSerializer.Deserialize<List<smartPoint>>(labirint);
-            foreach (var item in l)
-            {
+            //List<smartPoint> l = JsonSerializer.Deserialize<List<smartPoint>>(labirint);
+            //foreach (var item in l)
+            //{
 
-            }
+            //}
 
             var renderThread = new Timer((p) => { AnimatiomLoopTimer(); });
             renderThread.Change(0, 10);
@@ -148,8 +155,8 @@ namespace Game
             canvas.Clear(globalSettings.backgroundColour);
 
             //Отрисовываем фон игрового мира(карту)
-            for(int i = 0; i < GameWorld.map.Count; i++) {
-                GameWorld.map[i].Draw(canvas, args);
+            for(int i = 0; i < GameWorld.gameMap.Biom.Count; i++) {
+                GameWorld.gameMap.Biom[i].obj.Draw(canvas, args);
 #if DEBUG_GRAPHICS
                 SKPaint p = new SKPaint()
                 {

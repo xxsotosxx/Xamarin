@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Engine", "Engine\Engine.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Editor", "Editor\Editor.csproj", "{F11CCC4C-BE99-401A-80F2-E6CD370003DF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tanki", "Tanki\Tanki.csproj", "{1AE23566-F0C1-42FB-96AC-D3D82C922A62}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug_Graphics|Any CPU = Debug_Graphics|Any CPU
@@ -252,6 +254,36 @@ Global
 		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Release|x64.Build.0 = Release|Any CPU
 		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Release|x86.ActiveCfg = Release|Any CPU
 		{F11CCC4C-BE99-401A-80F2-E6CD370003DF}.Release|x86.Build.0 = Release|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Debug_Graphics|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Debug_Graphics|Any CPU.Build.0 = Debug|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Debug_Graphics|ARM.ActiveCfg = Debug|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Debug_Graphics|ARM.Build.0 = Debug|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Debug_Graphics|ARM64.ActiveCfg = Debug|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Debug_Graphics|ARM64.Build.0 = Debug|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Debug_Graphics|x64.ActiveCfg = Debug|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Debug_Graphics|x64.Build.0 = Debug|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Debug_Graphics|x86.ActiveCfg = Debug|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Debug_Graphics|x86.Build.0 = Debug|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Debug|Any CPU.ActiveCfg = Debug_Graphics|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Debug|Any CPU.Build.0 = Debug_Graphics|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Debug|ARM.Build.0 = Debug|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Debug|x64.Build.0 = Debug|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Debug|x86.Build.0 = Debug|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Release|ARM.ActiveCfg = Release|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Release|ARM.Build.0 = Release|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Release|ARM64.Build.0 = Release|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Release|x64.ActiveCfg = Release|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Release|x64.Build.0 = Release|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Release|x86.ActiveCfg = Release|Any CPU
+		{1AE23566-F0C1-42FB-96AC-D3D82C922A62}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,50 @@
+{
+  "BiomSize": {"Width": 50, "Height": 30},
+  "Biom": [
+    {
+      "x": 64,
+      "y": 64,
+      "blockType": "Wall1"
+    },
+    {
+      "x": 64,
+      "y": 96,
+      "blockType": "Wall1"
+    },
+    {
+      "x": 128,
+      "y": 32,
+      "blockType": "Wall1"
+    },
+    {
+      "x": 64,
+      "y": 128,
+      "blockType": "Wall1"
+    },
+    {
+      "x": 64,
+      "y": 160,
+      "blockType": "Wall1"
+    },
+    {
+      "x": 64,
+      "y": 192,
+      "blockType": "Wall1"
+    },
+    {
+      "x": 192,
+      "y": 192,
+      "blockType": "Tank_1_0"
+    },
+    {
+      "x": 224,
+      "y": 192,
+      "blockType": "Tank_1_1"
+    },
+    {
+      "x": 156,
+      "y": 192,
+      "blockType": "Tank_1_2"
+    }
+  ]
+}

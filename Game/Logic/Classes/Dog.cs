@@ -13,7 +13,7 @@ namespace Game.Logic.Classes
             moveDirection = MoveDirection.Вправо;
         }
 
-        public override void Draw(SKCanvas canvas, object args)
+        public override void Draw(SKCanvas canvas)
         {
 
         }
@@ -23,9 +23,9 @@ namespace Game.Logic.Classes
             base.MoveTo(moveDirection);
         }
 
-        public override void doAnimate(SKCanvas canvas, object args)
+        public override void doAnimate(SKCanvas canvas)
         {
-            base.doAnimate(canvas, args);
+            base.doAnimate(canvas);
             string frameName = string.Empty;
 
             switch (moveDirection)

@@ -32,7 +32,7 @@ namespace Xamarin
             var scale = args.Info.Width / (float)Width;
             canvas.Scale(scale);
 
-            Scene.Paint(canvas, args);
+            //Scene.Paint(canvas, args);
         }
 
         protected override void OnParentSet()
@@ -43,7 +43,7 @@ namespace Xamarin
         protected override void OnSizeAllocated(double width, double height)
         {
             base.OnSizeAllocated(width, height);
-            Scene.Rearange(this);
+            //Scene.Rearange(this);
         }
     }
 }

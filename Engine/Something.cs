@@ -20,8 +20,8 @@ namespace Engine
 
         public Animated(Settings settingsHost) : base(settingsHost, "") { }
 
-        public virtual void doAnimate(SKCanvas canvas, /*SKPaintSurfaceEventArgs*/ object args) {
-            Draw(canvas, args);
+        public virtual void doAnimate(SKCanvas canvas) {
+            Draw(canvas);
             FrameNumber+=0.1;
             if (FrameNumber>=FramesCount) FrameNumber = 0;
         }
@@ -129,7 +129,7 @@ namespace Engine
             speed = (float) random.Next(1, 10)/5;
             rect.Size = sHost.SpriteSize;
         }
-        public virtual void Draw(SKCanvas canvas, object args)
+        public virtual void Draw(SKCanvas canvas)
         {
             Figures.GradientSphere(canvas, rect, color, 80);
 #if DEBUG_SPRITES

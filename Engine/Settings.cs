@@ -19,6 +19,10 @@ namespace Engine
             //}
         }
 
+        public SKSizeI BiomSize
+        {
+            get; set;
+        }
         public List<ShowingObj> Biom { get; set; }
         public void AddToBiom(Showing shObj)
         {
@@ -53,9 +57,6 @@ namespace Engine
         public SKColor backgroundColour => SKColor.FromHsl(ОсновнойОттенокФона, 50, 30, 255);
         public SKColor lightColour => SKColor.FromHsl(ОсновнойОттенокСвета, 100, 90, 255);
 
-        //Размеры игровой сцены
-        //public readonly double Width;
-        //public readonly double Height;
         public readonly SKRect bounds = SKRect.Empty;
 
         public Settings(SKRect bounds)
@@ -64,23 +65,13 @@ namespace Engine
             this.bounds = bounds;
         }
 
+        public Settings() { }
 
         /// <summary>
         /// Функция/свойство, которая расчитывает средний размер спрайта (единичного объекта игрового мира) в зависимости от размера канвы/окна программы
         /// </summary>
         public SKSize SpriteSize { 
             get {
-                //if (_spriteSize == SKSize.Empty)
-                //{
-                //    var lwidh = bounds.Width;
-                //    var lheight = bounds.Height;
-                //    _spriteSize = new SKSize();
-                //    _spriteSize.Width = lwidh >= lheight
-                //        ? Convert.ToInt64(lwidh) / КоличествоСпрайтовНаГлавнойОси
-                //        : Convert.ToInt64(lheight) / КоличествоСпрайтовНаГлавнойОси;
-                //    _spriteSize.Height = _spriteSize.Width;
-                //}
-                //return _spriteSize;
                 _spriteSize = new SKSize(32,32);
                 return _spriteSize;
             }

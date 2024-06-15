@@ -25,7 +25,7 @@ namespace Engine
         }
 
 
-        public override void Draw(SKCanvas canvas, object args)
+        public override void Draw(SKCanvas canvas)
         {
             SKRect rect1 = new SKRect(0, 0, bitmap.Width, bitmap.Height);
             SKRect rect2 = rect;

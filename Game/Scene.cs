@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Text.Json;
-using System.Collections.Generic;
 
 
 using SkiaSharp;
@@ -31,10 +29,10 @@ namespace Game
         //public static object IDictiobary { get; private set; }
 
 
-        internal class smartPoint
-        {
-            int x; int y;
-        }
+        //internal class smartPoint
+        //{
+        //    int x; int y;
+        //}
 
 
         /// <summary>
@@ -175,7 +173,7 @@ namespace Game
 
             //Отрисовываем фон игрового мира(карту)
             for(int i = 0; i < GameWorld.gameMap.Biom.Count; i++) {
-                GameWorld.gameMap.Biom[i].obj.Draw(canvas, args);
+                GameWorld.gameMap.Biom[i].obj.Draw(canvas);
 #if DEBUG_GRAPHICS
                 SKPaint p = new SKPaint()
                 {
@@ -183,7 +181,7 @@ namespace Game
                     Style = SKPaintStyle.Stroke,
                     StrokeWidth = 3
                 };
-                canvas.DrawRect(GameWorld.map[i].rect, p);
+                canvas.DrawRect(GameWorld.gameMap.Biom[i].obj.rect, p);
 #endif
             }
 
@@ -194,8 +192,8 @@ namespace Game
                 if (item.isInGame)
                 {
 
-                    if (item is IAnimated animatedItem) animatedItem.doAnimate(canvas, args);
-                    else item.Draw(canvas, args);
+                    if (item is IAnimated animatedItem) animatedItem.doAnimate(canvas);
+                    else item.Draw(canvas);
                 }
 
 #if DEBUG_GRAPHICS

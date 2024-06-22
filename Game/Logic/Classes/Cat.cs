@@ -9,7 +9,7 @@ namespace Game.Logic.Classes
 {
      internal class Cat : Animated, IAnimated
      {
-        internal Cat(Settings settings) : base(settings) {
+        public Cat(Settings settings) : base(settings) {
             moveDirection = MoveDirection.Вправо;
         }
 

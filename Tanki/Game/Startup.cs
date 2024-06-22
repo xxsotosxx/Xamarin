@@ -1,5 +1,6 @@
 ﻿using Engine;
 using SkiaSharp;
+using System.Diagnostics;
 using System.Text.Json;
 
 namespace Tanki.Game;
@@ -7,11 +8,12 @@ namespace Tanki.Game;
 internal static class Startup
 {
     internal static Form? globalForm = null;
-    internal static Settings globalSettings = new();
+    //internal static Settings globalSettings = new();
     internal static SKSizeI WorldSize => GameWorld.gameMap.BiomSize;
     internal static bool Init(Form form, SKSize size)
     {
-        globalSettings = new Settings(new SKRect(0, 0, size.Width, size.Height));
+        var globalSettings = new Settings(new SKRect(0, 0, size.Width, size.Height));
+        GameWorld.DefaultSettings = globalSettings;
         Scene.backgroundColor = SKColors.Black;
 
         #region Загрузка Композиций спрайтов
@@ -44,8 +46,7 @@ internal static class Startup
         #endregion Загрузка карты (Биом)
 
         #region Стенки по периметру 
-        //float y = (float)globalSettings.bounds.Height - globalSettings.SpriteSize.Height;
-        //int wW = (int)Math.Ceiling(globalSettings.bounds.Width / globalSettings.SpriteSize.Width);
+
         float y = (GameWorld.gameMap.BiomSize.Height - 1) * globalSettings.SpriteSize.Height;
         float maxW = 0;
         for (int i = 0; i < GameWorld.gameMap.BiomSize.Width; i++)
@@ -59,8 +60,7 @@ internal static class Startup
             GameWorld.gameMap.AddToBiom(wallU);
             GameWorld.gameMap.AddToBiom(wallD);
         }
-        //float x = (float)globalSettings.bounds.Width - globalSettings.SpriteSize.Width;
-        //int wH = (int)Math.Ceiling(globalSettings.bounds.Height / globalSettings.SpriteSize.Height);
+
         float x = (GameWorld.gameMap.BiomSize.Width - 1) * globalSettings.SpriteSize.Width;
         float maxH = 0;
         for (int i = 0; i < GameWorld.gameMap.BiomSize.Height; i++)
@@ -78,11 +78,24 @@ internal static class Startup
         form.Width =  (int)Math.Round(maxW);
         form.Height = (int)Math.Round(maxH + globalSettings.SpriteSize.Height);
 
+        Stopwatch watch = new Stopwatch();
+        watch.Start();
 
-        var renderThread = new System.Threading.Timer((p) => { 
+        var renderThread = new System.Threading.Timer((p) => {
+            if (watch.ElapsedMilliseconds > 5000)
+            {
+                watch.Reset();
+                Tank tank = new Tank(globalSettings);
+                tank.SetXY(new(9 * globalSettings.spriteSize.Width, 9 * globalSettings.spriteSize.Height));
+                GameWorld.objects.Add(tank);
+                watch.Start();
+            }
+
             Scene.AnimatiomLoopTimer();
             if (globalForm != null)
+            {
                 globalForm.Invalidate();
+            }
         });
         renderThread.Change(0, 10);
         globalForm = form;

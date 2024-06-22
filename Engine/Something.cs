@@ -15,15 +15,16 @@ namespace Engine
 
     public class Animated : Something 
     {
-        public const int FramesCount = 3;
+        public int FramesCount = 3;
         public double FrameNumber;
+        public int frameNumberInt => (int)Math.Round(FrameNumber);
 
         public Animated(Settings settingsHost) : base(settingsHost, "") { }
 
         public virtual void doAnimate(SKCanvas canvas) {
             Draw(canvas);
             FrameNumber+=0.1;
-            if (FrameNumber>=FramesCount) FrameNumber = 0;
+            if (FrameNumber>=FramesCount-1) FrameNumber = 0;
         }
     }
 
@@ -33,8 +34,8 @@ namespace Engine
     public class Something : I2DGraphicMember, IMapAction
     {
         protected Settings sHost;
-        protected MoveDirection moveDirection;
-        protected float speed;
+        public MoveDirection moveDirection;
+        public float speed;
         protected static readonly Random random = new Random();
         public bool isInGame = true;
 
@@ -53,7 +54,7 @@ namespace Engine
         //    set { PosXY.X = value; }
         //}
 
-        public enum CollisionType { ChangeDirection, Continue, Destroy }
+        public enum CollisionType { ChangeDirection, Continue, Destroy, DestroyBoth, DestroySelf }
 
         public virtual CollisionType GetCollisionType(Something targteObject)
         {

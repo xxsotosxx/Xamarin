@@ -1,5 +1,6 @@
 ﻿using SkiaSharp;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 
@@ -13,10 +14,17 @@ namespace Engine
             public int y { get; set; }
             public string blockType { get; set; }
             public Showing obj;
-            //public ShowingObj(Showing obj)
-            //{
-            //    this.obj = obj;
-            //}
+            public string coordType {
+                set
+                {
+                    switch (value) {
+                        case "block":
+                            x = x * GameWorld.DefaultSettings.spriteSizeI.Width;
+                            y = y * GameWorld.DefaultSettings.spriteSizeI.Height;
+                            break;
+                    }
+                }
+            }
         }
 
         public SKSizeI BiomSize
@@ -33,7 +41,8 @@ namespace Engine
     public static class GameWorld
     {
         //public static ConcurrentBag<Something> objects = new ConcurrentBag<Something>();
-        public static List<Something> objects = new List<Something>();
+        public static Settings DefaultSettings = new Settings();
+        public static ConcurrentBag<Something> objects = new ConcurrentBag<Something>();
         public static JsonMap gameMap = new JsonMap();
 
         public static Dictionary<string, SKBitmap> ShowingImageLibrary= new Dictionary<string, SKBitmap>();
@@ -46,7 +55,7 @@ namespace Engine
         public const string worldMapFileName = "worldmap.json";
         public const string SaveLoadFileName = "saveload.json";
 
-        public int КоличествоСпрайтовНаГлавнойОси = 60;
+        //public int КоличествоСпрайтовНаГлавнойОси = 60;
         
         private SKSize _spriteSize = SKSize.Empty;
         public SKSize spriteSize { get => _spriteSize; }

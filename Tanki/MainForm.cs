@@ -9,6 +9,9 @@ namespace Tanki
     public partial class MainForm : Form
     {
         Bitmap? bitmap = null;
+
+        Tank? comanderTank = null;
+             
         public MainForm()
         {
             InitializeComponent();
@@ -31,9 +34,10 @@ namespace Tanki
 
         private void MainForm_MouseClick(object? sender, MouseEventArgs e)
         {
-            var obj = new Something(Startup.globalSettings, "Tank");
-            if (obj.SetXY(new SKPoint(100,100)))
-                GameWorld.objects.Add(obj);
+            //var obj = new Something(Startup.globalSettings, "Tank");
+            comanderTank = new ComanderTank(GameWorld.DefaultSettings);
+            if (comanderTank.SetXY(new SKPoint(100,100)))
+                GameWorld.objects.Add(comanderTank);
         }
 
         private void MainForm_KeyDown(object? sender, KeyEventArgs e)
@@ -42,6 +46,28 @@ namespace Tanki
             {
                 case Keys.Escape:
                     Close();
+                    break;
+                case Keys.Down:
+                    if (comanderTank != null)
+                        comanderTank.moveDirection = MoveDirection.¬низ;
+                    break;
+                case Keys.Up:
+                    if (comanderTank != null)
+                        comanderTank.moveDirection = MoveDirection.¬верх;
+                    break;
+                case Keys.Right:
+                    if (comanderTank != null)
+                        comanderTank.moveDirection = MoveDirection.¬право;
+                    break;
+                case Keys.Left:
+                    if (comanderTank != null)
+                        comanderTank.moveDirection = MoveDirection.¬лево;
+                    break;
+                case Keys.Space:
+                    if (comanderTank != null)
+                    {
+                        new Weapon(comanderTank, 0);
+                    }
                     break;
             }
         }
